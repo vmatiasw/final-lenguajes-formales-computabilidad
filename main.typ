@@ -143,9 +143,7 @@ Cabe destacar que la condición $floor.l p B f(arrow(x), arrow(alpha)) floor.r t
 coordenada de $delta (p, B)$ sea $L$.
 
 == Combo 8: Defina:
-=== $M(P)$
-
-==== Minimización de variable numérica
+=== $M(P)$ Minimización de variable numérica
 Sea $Sigma$ un alfabeto finito y sea $P : "Dom"_P subset.eq omega^n times Sigma^*^m$. Dado $(arrow(x), arrow(alpha)) in omega^n times Sigma^*^m$, cuando exista al menos un $t in omega$ tq $P(t, arrow(x), arrow(alpha)) = 1$, usaremos $min_t P(t, arrow(x), arrow(alpha))$ para denotar al menor de tales $t$'s.
 
 Definimos $M(P) = lambda arrow(x) arrow(alpha) [min_t P(t, arrow(x), arrow(alpha))]$
@@ -154,25 +152,11 @@ Diremos que $M(P)$ es obtenida por minimización de variable numérica a partir 
 
 Obs: $M(P)$ esta definida solo para aquellas $(n + m)$-uplas $(arrow(x), arrow(alpha))$ para las cuales hay al menos un $t$ tal que se da $P(t, arrow(x), arrow(alpha)) = 1$
 
-==== Minimización de variable alfabética
-
-Sea que $Sigma != emptyset$. Sea $<=$ un orden
-total sobre $Sigma$, $<=$ puede ser naturalmente extendido a un orden total sobre $Sigma^*$. Sea $P : "Dom"_P subset.eq omega^n times Sigma^*^m times Sigma^*$ un predicado. Cuando $(arrow(x), arrow(alpha)) in omega^n times Sigma^*^m$ es tal que existe al menos un $alpha in Sigma^*$ tal que $P(arrow(x), arrow(alpha), alpha) = 1$, usaremos $min^<=_{alpha} P(arrow(x), arrow(alpha), alpha)$ para denotar al menor $alpha in Sigma^*$ tal que $P(arrow(x), arrow(alpha), alpha) = 1$.
-
-Definimos $M^<= (P) = lambda arrow(x) arrow(alpha) [min^<=_alpha P(arrow(x), arrow(alpha), alpha)]$
-
-Diremos que $M^<= (P)$ es obtenida por minimización de variable alfabética a partir de $P$.
-
-Obs: $M^<= (P)$ esta definida solo para aquellas $(n + m)$-uplas $(arrow(x), arrow(alpha))$ para las cuales hay al menos un $alpha$ tal que se da $P(arrow(x), arrow(alpha), alpha) = 1$
-
 === $"Lt"$
 
-Definamos la función $"Lt" : NN -> omega$ de la siguiente manera:
-
-$"Lt"(x) = cases(
-  max_i (x)_i != 0 &"si" x != 1,
-  0 &"si" x = 1
-)$
+$"Lt" : NN &-> omega\
+1 &-> 0\
+x &-> max_i (x)_i != 0$
 
 === Conjunto rectangular
 
@@ -185,27 +169,53 @@ Dado un conjunto $Sigma$-mixto $S != emptyset$, decimos que $S$ es un conjunto d
 $emptyset$ es un conjunto de tipo $(n, m)$ cualesquiera sean $n, m in omega$ por lo cual cuando hablemos de el tipo de un conjunto deberemos estar seguros de que dicho conjunto es no vacío.
 
 == Combo 9
-+ Conjunto rectangular
-+ "$I$ es una instrucción de $S^Sigma$"
-+ "$P$ es un programa de $S^Sigma$"
-+ $I^P_i$
-+ $n(P)$
-+ $"Bas"$
+=== Conjunto rectangular
+escrito mas arriba
+=== "$I$ es una instrucción de $S^Sigma$"
+
+Una instrucción de $S^Sigma$ es ya sea una instrucción básica de $S^Sigma$ o una palabra de la forma $alpha I$, donde $alpha in {L macron(n) : n in NN}$ y $I$ es una instrucción básica de
+$S^Sigma$. Llamamos $"Ins"^Sigma$ al conjunto de todas las instrucciones de $S^Sigma$.
+
+=== "$P$ es un programa de $S^Sigma$"
+
+Un programa de $S^Sigma$ es una palabra de la forma $I_1 I_2...I_n$ donde $n >= 1, I_1, ..., I_n in "Ins"^Sigma$ y se cumple la ley de los GOTO.
+
+Ley de los GOTO: Para cada $i in {1, ..., n}$, si GOTO $L macron(m)$ es un tramo final de $I_i$, entonces existe $j in {1, ..., n}$ tq $I_j$ tiene label $L macron(m)$.
+
+=== $I^P_i$
+
+$lambda i P[I^P_i] : omega times "Pro"^Sigma &-> omega\
+i P &-> "i-esima instrucción de P contando desde el 1. " &"si" i in {1, ..., n(P)}\
+i P &-> epsilon &"si" i in.not {1, ..., n(P)}$
+
+=== $n(P)$
+
+=== $"Bas"$
 
 == Combo 10
 Defina relativo al lenguaje $S^Sigma$:
-+ "estado"
-+ "descripción instantánea"
-+ $S_P$
-+ "estado obtenido luego de $t$ pasos, partiendo del estado $(arrow(x), arrow(alpha))$"
-+ "$P$ se detiene (luego de $t$ pasos), partiendo desde el estado $(arrow(x), arrow(alpha))$"
+=== "estado"
+=== "descripción instantánea"
+=== $S_P$
+=== "estado obtenido luego de $t$ pasos, partiendo del estado $(arrow(x), arrow(alpha))$"
+=== "$P$ se detiene (luego de $t$ pasos), partiendo desde el estado $(arrow(x), arrow(alpha))$"
 
 == Combo 11
 Defina:
-+ $Psi^("n,m,#")_P$
-+ "f es $Sigma$-computable"
-+ "$P$ computa a $f$"
-+ $M^<= (P)$
+=== $Psi^("n,m,#")_P$
+=== "f es $Sigma$-computable"
+=== "$P$ computa a $f$"
+=== $M^<= (P)$ Minimización de variable alfabética
+
+Sea que $Sigma != emptyset$. Sea $<=$ un orden
+total sobre $Sigma$, $<=$ puede ser naturalmente extendido a un orden total sobre $Sigma^*$. Sea $P : "Dom"_P subset.eq omega^n times Sigma^*^m times Sigma^*$ un predicado. Cuando $(arrow(x), arrow(alpha)) in omega^n times Sigma^*^m$ es tal que existe al menos un $alpha in Sigma^*$ tal que $P(arrow(x), arrow(alpha), alpha) = 1$, usaremos $min^<=_{alpha} P(arrow(x), arrow(alpha), alpha)$ para denotar al menor $alpha in Sigma^*$ tal que $P(arrow(x), arrow(alpha), alpha) = 1$.
+
+Definimos $M^<= (P) = lambda arrow(x) arrow(alpha) [min^<=_alpha P(arrow(x), arrow(alpha), alpha)]$
+
+Diremos que $M^<= (P)$ es obtenida por minimización de variable alfabética a partir de $P$.
+
+Obs: $M^<= (P)$ esta definida solo para aquellas $(n + m)$-uplas $(arrow(x), arrow(alpha))$ para las cuales hay al menos un $alpha$ tal que se da $P(arrow(x), arrow(alpha), alpha) = 1$
+
 
 == Combo 12
 Defina cuando un conjunto $S subset.eq omega^n times Sigma^*^m$ es llamado $Sigma$-computable, cuando es llamado $Sigma$-enumerable y defina "el programa $P$ enumera a $S$"
