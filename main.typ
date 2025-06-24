@@ -179,14 +179,14 @@ $emptyset$ es un conjunto de tipo $(n, m)$ cualesquiera sean $n, m in omega$ por
 
 === "$I$ es una instrucción de $S^Sigma$"
 
-Una instrucción de $S^Sigma$ es ya sea una instrucción básica de $S^Sigma$ o una palabra de la forma $alpha I$, donde $alpha in {L macron(n) : n in NN}$ y $I$ es una instrucción básica de
+Una instrucción de $S^Sigma$ es ya sea una instrucción básica de $S^Sigma$ o una palabra de la forma $alpha I$, donde $alpha in {L overline(n) : n in NN}$ y $I$ es una instrucción básica de
 $S^Sigma$. Llamamos $"Ins"^Sigma$ al conjunto de todas las instrucciones de $S^Sigma$.
 
 === "$P$ es un programa de $S^Sigma$"
 
 Un programa de $S^Sigma$ es una palabra de la forma $I_1 I_2...I_n$ donde $n >= 1, I_1, ..., I_n in "Ins"^Sigma$ y se cumple la ley de los GOTO.
 
-Ley de los GOTO: Para cada $i in {1, ..., n}$, si GOTO $L macron(m)$ es un tramo final de $I_i$, entonces existe $j in {1, ..., n}$ tq $I_j$ tiene label $L macron(m)$.
+Ley de los GOTO: Para cada $i in {1, ..., n}$, si GOTO $L overline(m)$ es un tramo final de $I_i$, entonces existe $j in {1, ..., n}$ tq $I_j$ tiene label $L overline(m)$.
 
 === $I^P_i$
 
@@ -202,7 +202,7 @@ P &-> m "tq" P = I_1 I_2...I_m$
 === $"Bas"$
 
 $"Bas" : "Ins"^Sigma &-> (Sigma union Sigma_p)^ast\
-I &-> J &"si" I "es de la forma" L macron(k) J "con" J in "Ins"^Sigma\
+I &-> J &"si" I "es de la forma" L overline(k) J "con" J in "Ins"^Sigma\
 I &-> I &"c.c."$
 
 == Combo 10: Defina relativo al lenguaje $S^Sigma$:
@@ -210,7 +210,7 @@ I &-> I &"c.c."$
 
 Es un par $(arrow(x), arrow(sigma)) = ((s_1, s_2, ...),(sigma_1, sigma_2, ...)) in omega^[NN] times Sast^[NN]$
 
-Si $i >= 1$, entonces diremos que $s_i$ es el valor de la variable $N macron(i)$ y $alpha_i$ es el valor de la variable $P macron(i)$ en el estado $(arrow(x), arrow(sigma))$.
+Si $i >= 1$, entonces diremos que $s_i$ es el valor de la variable $N overline(i)$ y $alpha_i$ es el valor de la variable $P overline(i)$ en el estado $(arrow(x), arrow(sigma))$.
 
 === "descripción instantánea"
 
@@ -223,8 +223,22 @@ Si $i in {1, ..., n(P)}$, $(i, arrow(x), arrow(sigma))$ nos dice que las variabl
 Dado un programa $P$.
 
 $S_P : "Des"^Sigma &-> "Des"^Sigma\
-(i, arrow(x), arrow(sigma)) &-> d in "Des"^Sigma "que resulta al realizar" I^P_i "estando en estado" (arrow(x), arrow(sigma)) &"si" i in {1, ..., n(P)}\
-(i, arrow(x), arrow(sigma)) &-> (i, arrow(x), arrow(sigma)) &"si" i in.not {1, ..., n(P)}$
+(i, arrow(x), arrow(sigma)) &-> (i, arrow(x), arrow(sigma)) &"si" i in.not {1, ..., n(P)}\
+(i, arrow(s), arrow(sigma)) &-> (i + 1, (s_1, ..., s_k - 1, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(k) - 1\
+(i, arrow(s), arrow(sigma)) &-> (i + 1, (s_1, ..., s_k + 1, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(k) + 1\
+(i, arrow(s), arrow(sigma)) &-> (i + 1, (s_1, ..., s_n, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(n)\
+(i, arrow(s), arrow(sigma)) &-> (i + 1, (s_1, ..., 0, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- 0\
+(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" N overline(k) != 0 "GOTO" L overline(m) and s_k = 0\
+(i, arrow(s), arrow(sigma)) &-> (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" N overline(k) != 0 "GOTO" L overline(m) and s_k != 0\
+(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), (sigma_1, ..., arrow.cw.half sigma_k, ...)) &"si" "Bas"(I^P_i) = P overline(k) <- arrow.cw.half P overline(k)\
+(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), (sigma_1, ..., sigma_k a, ...)) &"si" "Bas"(I^P_i) = P overline(k) <- P overline(k) . a\
+(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), (sigma_1, ..., sigma_macron(n), ...)) &"si" "Bas"(I^P_i) = P overline(k) <- P overline(n)\
+(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), (sigma_1, ..., epsilon , ...)) &"si" "Bas"(I^P_i) = P overline(k) <- epsilon\
+(i, arrow(s), arrow(sigma)) &-> (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" P overline(k) "BEGINS" a "GOTO" L overline(m) and [sigma_k]_1 = a\
+(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" P overline(k) "BEGINS" a "GOTO" L overline(m) and [sigma_k]_1 != a\
+(i, arrow(s), arrow(sigma)) &-> (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "GOTO" L overline(m)\
+(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "SKIP"$
+
 
 === "estado obtenido luego de $t$ pasos, partiendo del estado $(arrow(x), arrow(alpha))$"
 
@@ -266,31 +280,163 @@ Diremos que $M^<= (P)$ es obtenida por minimización de variable alfabética a p
 Obs: $M^<= (P)$ esta definida solo para aquellas $(n + m)$-uplas $(arrow(x), arrow(alpha))$ para las cuales hay al menos un $alpha$ tq se da $P(arrow(x), arrow(alpha), alpha) = 1$
 
 
-== Combo 12
-Defina cuando un conjunto $S subset.eq omega^n times Sast^m$ es llamado $Sigma$-computable, cuando es llamado $Sigma$-enumerable y defina "el programa $P$ enumera a $S$"
+== Combo 12: Defina cuando un conjunto $S subset.eq omega^n times Sast^m$ es llamado $Sigma$-computable, cuando es llamado $Sigma$-enumerable y defina "el programa $P$ enumera a $S$"
+
+Un conjunto $S subset.eq omega^n times Sast^m$ sera llamado $Sigma$-computable cuando la función $chi^(omega^n times Sast^m)_S$ sea $Sigma$-computable.
+
+Un conjunto $S subset.eq omega^n times Sast^m$ sera llamado $Sigma$-enumerable cuando sea vacío o haya
+una función sobreyectiva $F : omega -> S$ tq $F_((i))$ sea $Sigma$-computable, para cada $i in {1, ..., n + m}$.
+
+Nótese que, un conjunto no vacío $S subset.eq omega^n times Sast^m$ es $Sigma$-enumerable sii hay programas $P_1, ..., P_(n+m)$ con dato de entrada $x in omega$ tales que:
+
+$ S = "Im"[Psi^(1,0,hash)_(P_1), ..., Psi^(1,0,hash)_(P_n), Psi^(1,0,ast)_(P_(n+1)), ..., Psi^(1,0,ast)_(P_(n+m))] $
+
+Como puede notarse, los programas $P_1, ..., P_(n+m)$ puestos secuencialmente a funcionar desde el estado $||x||$ producen, en forma natural, un procedimiento efectivo que enumera a $S$. Es decir que los programas $P_1, ..., P_(n+m)$ enumeran a $S$.
+
 
 == Combo 13
 Defina:
-+ $i^(n,m)$
-+ $E^(n,m)_hash$ + $E^(n,m)_ast$
-+ $E^(n,m)_(hash_j)$
-+ $E^(n,m)_(ast_j)$
-+ $"Halt"^(n,m)$
-+ $T^(n,m)$
-+ $"AutoHalt"^Sigma$
-+ Los conjuntos $A$ y $N$
+=== $i^(n,m)$
+$i^(n,m) : omega times omega^n times Sast^m times "Pro"^Sigma &-> omega\
+(0, arrow(x), arrow(alpha), P) &-> 1\
+(t, arrow(x), arrow(alpha), P) &-> j "tq" overbrace(S_P \(...S_P \(S_P, "t veces") (1, arrow(x), arrow(sigma)))...) = (j, arrow(u), arrow(eta))$
 
-== Combo 14
-Explique en forma detallada la notación lambda
+=== $E^(n,m)_hash$
 
-== Combo 15
-Dada una función $f : D_f subset.eq omega times Sast -> omega$, describa qué tipo de objeto es y qué propiedades debe tener el macro: [V2 ← f(V1,W1)]
+$E^(n,m)_hash : omega times omega^n times Sast^m times "Pro"^Sigma &-> omega^[NN]\
+(0, arrow(x), arrow(alpha), P) &-> (x_1, ..., x_n, 0, ...)\
+(t, arrow(x), arrow(alpha), P) &-> arrow(u) "tq" overbrace(S_P \(...S_P \(S_P, "t veces") (1, arrow(x), arrow(sigma)))...) = (j, arrow(u), arrow(eta))$
 
-== Combo 16
-Dado un predicado $p : D_f subset.eq omega times Sast -> omega$, describa qué tipo de objeto es y qué propiedades debe tener el macro: [IF P(V1,W1) GOTO A1]
+=== $E^(n,m)_hash$ + $E^(n,m)_ast$
 
-== Combo 17
-Defina el concepto de función y desarrolle las tres Convenciones Notacionales asociadas a dicho concepto (Guía 1)
+$E^(n,m)_ast : omega times omega^n times Sast^m times "Pro"^Sigma &-> Sast^[NN]\
+(0, arrow(x), arrow(alpha), P) &-> (alpha_1, ..., alpha_n, epsilon, ...)\
+(t, arrow(x), arrow(alpha), P) &-> arrow(eta) "tq" overbrace(S_P \(...S_P \(S_P, "t veces") (1, arrow(x), arrow(sigma)))...) = (j, arrow(u), arrow(eta))$
+
+=== $E^(n,m)_(hash_j)$
+
+$E^(n,m)_(hash_j) : omega times omega^n times Sast^m times "Pro"^Sigma -> omega$
+
+$E^(n,m)_(hash_j) = p^(n,m)_j compose E^(n,m)_hash$
+
+=== $E^(n,m)_(ast_j)$
+
+$E^(n,m)_(ast_j) : omega times omega^n times Sast^m times "Pro"^Sigma -> Sast$
+
+$E^(n,m)_(ast_j) = p^(n,m)_j compose E^(n,m)_ast$
+
+=== $"Halt"^(n,m)$
+
+$"Halt"^(n,m) : omega times omega^n times Sast^m times "Pro"^Sigma &-> {0, 1}\
+(t, arrow(x), arrow(sigma), P) &-> i^(n,m) (t, arrow(x), arrow(alpha),P) = n(P) + 1$
+
+=== $T^(n,m)$
+
+$"Dom"_(T^(n,m)) = {(arrow(x), arrow(sigma), P) : P "se detiene partiendo de" ∥x_1, ..., x_n, alpha_1, ..., alpha_m∥}$
+
+$T^(n,m) : "Dom"_(T^(n,m)) &-> omega\
+(t, arrow(x), arrow(sigma), P) &-> min_t ("Halt"^(n,m) (t, arrow(x), arrow(sigma), P))$
+
+=== $"AutoHalt"^Sigma$
+
+Dado $Sigma supset.eq Sigma_p$
+
+$"AutoHalt"^Sigma : "Pro"^Sigma &-> {0, 1}\
+P &-> (exists t in omega) "Halt"^(0,1) (t, P, P)$
+
+=== Los conjuntos $A$ y $N$
+
+Dado $Sigma supset.eq Sigma_p$
+
+$A = {P in "Pro"^Sigma : "AutoHalt"^Sigma (P)}$
+
+$N = {P in "Pro"^Sigma : not "AutoHalt"^Sigma (P)}$
+
+== Combo 14: Explique en forma detallada la notación lambda
+
+Usamos la notación lambda de Church de la forma descrita a continuación.
+
+Esta notación se define en función de un alfabeto finito previamente fijado, que denotaremos por $Sigma$.
+
+Solo se usan expresiones tq:
++ *Variables permitidas*:
+  - Se usan *variables numéricas* que se valúan en números de ($omega$), y se denotan por letras como $x, y, z, u, v, w, n, m, k, ...$.
+  - Se usan *variables alfabéticas* que se valúan en palabras sobre el alfabeto $Sigma$. Se denotan por letras como $alpha, beta, gamma, delta, epsilon, psi, eta, ...$.
+
++ *Dominio parcial*: Las expresiones lambda pueden ser *parcialmente definidas*. Es decir, puede haber valuaciones de sus variables para las cuales la expresión no este definida.
+
++ *Libertad sintáctica*: Las expresiones pueden ser descritas informalmente.
+
++ *Valores booleanos*: Consideramos que las expresiones booleanas toman valores en el conjunto ${0, 1} ⊆ omega$ (usando $0$ para falso y $1$ para verdadero).
+
+Dado un alfabeto $Sigma$ a las expresiones que cumplan las características dadas anteriormente las llamaremos lambdificables con respecto a $Sigma$.
+
+== Combo 15: Dada una función $f : "Dom"_f subset.eq omega times Sast -> omega$, describa qué tipo de objeto es y qué propiedades debe tener el macro: [V2 ← f(V1,W1)]
+
+Dada una función $f : "Dom"_f subset.eq omega^n times Sast^m arrow.r omega$ $Sigma$-computable, escribiremos $V overline(n+1) <- f(V 1, ..., V overline(n), W 1, ..., W overline(m))$ para denotar un macro $M$ que cumple las propiedades:
+
++ Las variables oficiales de $M$ son:
+  $V 1, ..., V overline(n), V overline(n+1), W 1, ..., W overline(m)$
++ $M$ no tiene labels oficiales.
++ Si reemplazamos:
+  + Las variables oficiales por variables concretas $N overline(k_1), ..., N overline(k_n), N overline(k_(n+1)), P overline(j_1), ..., P overline(j_m)$
+  + Las variables auxiliares de $M$ por variables concretas todas distintas entre sí y distintas de las ya mencionadas.
+  + Los labels auxiliares por labels concretos, también distintos entre sí.
+
+  Entonces, la palabra así obtenida es un programa de $S^Sigma$ que denotamos $N overline(k_(n+1)) <- f(N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m))$ y debe satisfacer que si lo corremos partiendo de un estado $e$ que le asigne a las variables $N overline(k_1), ..., N overline(k_n), N overline(k_(n+1)), P overline(j_1), ..., P overline(j_m)$ valores $x_1 , ..., x_n , alpha_1 , ..., alpha_m$ , entonces independientemente de los valores que les asigne $e$ al resto de las variables se dará que:
+
+  + Si $(arrow(x), arrow(alpha)) in.not "Dom"_f$, entonces el programa no se detiene.
+  + Si $(arrow(x), arrow(alpha)) in "Dom"_f$, entonces:
+    - El programa se detiene;
+    - Llega a un estado $e'$ tq:
+      + $e'$ asigna a $N overline(k_(n+1))$ el valor $f(arrow(x), arrow(alpha))$;
+      + $e'$ solo difiere de $e$ en el valor de $N overline(k_(n+1))$ y en aquellas variables que reemplazaron a las variables auxiliares de $M$. 
+
+La palabra $N overline(k_(n+1)) <- f(N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m))$ se denomina la expansión del macro $V overline(n+1) <- f(V 1, ..., V overline(n), W 1, ..., W overline(m))$ respecto de la elección concreta de variables y labels realizada.
+
+== Combo 16: Dado un predicado $p : D_f subset.eq omega times Sast -> omega$, describa qué tipo de objeto es y qué propiedades debe tener el macro: [IF P(V1,W1) GOTO A1]
+
+Dado un predicado $P : "Dom"_P subset.eq omega^n times Sast^m -> {0, 1}$ $Sigma$-computable, escribiremos $["IF" P(V 1, ..., V overline(n), W 1, ..., W overline(m)) "GOTO" A 1]$ para denotar un macro $M$ que cumple las siguientes propiedades:
+
++ Las variables oficiales de $M$ son: $V 1, ..., V overline(n), W 1, ..., W overline(m)$
++ $A 1$ es el único label oficial de $M$.
++ Si reemplazamos:
+  + Las variables oficiales por variables concretas:  
+    $N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m)$
+  + El label oficial $A 1$ por un label concreto $L overline(k)$
+  + Las variables auxiliares por variables concretas, todas distintas entre sí y distintas de las ya mencionadas
+  + Los labels auxiliares por labels concretos, todos distintos entre sí y distintos de $L overline(k)$
+
+  Entonces, la palabra así obtenida es un programa de $S^Sigma$ (salvo por la ley del GOTO respecto de $L overline(k)$) que denotaremos $["IF" P(N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m)) "GOTO" L overline(k)]$ y debe satisfacer que si lo corremos partiendo de un estado $e$ que le asigne a las variables $N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m)$ valores $x_1 , ..., x_n , alpha_1 , ..., alpha_m$ , entonces independientemente de los valores que les asigne $e$ al resto de las variables se dará que
+    + Si $(arrow(x), arrow(alpha)) in.not "Dom"_P$, el programa no se detiene.
+    + Si $(arrow(x), arrow(alpha)) in "Dom"_P$ y $P(arrow(x), arrow(alpha)) = 1$, entonces:
+      - Luego de una cantidad finita de pasos, se salta al label $L overline(k)$.
+      - El estado alcanzado $e'$ también solo puede diferir de $e$ en las variables que reemplazaron a las auxiliares de $M$, y no modifica las demás.
+    + Si $(arrow(x), arrow(alpha)) in "Dom"_P$ y $P(arrow(x), arrow(alpha)) = 0$, entonces:
+      - Luego de una cantidad finita de pasos, el programa se detiene.
+      - El estado alcanzado $e'$ también solo puede diferir de $e$ en las variables que reemplazaron a las auxiliares de $M$, y no modifica las demás.
+
+La palabra $["IF" P(N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m)) "GOTO" L overline(k)]$ se denomina la expansión del macro $["IF" P(V 1, ..., V overline(n), W 1, ..., W overline(m)) "GOTO" A 1]$ respecto de la elección concreta de variables y labels realizada.
+
+
+== Combo 17: Defina el concepto de función y desarrolle las tres Convenciones Notacionales asociadas a dicho concepto
+
+Una función es un conjunto de pares tq, si $(x, y) in f$ y $(x, z) in f$, entonces $y = z$.
+
+Dada una función $f$, definimos:
+- $"Dom"_f = {x : (x, y) in f "para algún" y}$
+- $"Im"_f = {y : (x, y) in f "para algún" x}$
+
+Dado $x in "Dom"_f$, usaremos $f (x)$ para denotar al único $y in "Im"_f$ tq $(x, y) in f$.
+
+Nótese que $emptyset$ es una función y que
+$"Dom"_emptyset = "Im"_emptyset = emptyset$.
+
+Escribimos $f : S subset.eq A -> B$ para expresar que $f$ es una función tq $"Dom"_f = S subset.eq A$ y $"Im"_f subset.eq B$. También escribimos $f : A -> B$ si $S = A$. En tal contexto llamaremos a $B$ conjunto de llegada.
+
+Muchas veces para definir una función $f$, lo haremos dando su dominio y su regla de asignación.
+
+Ademas, para hacer mas intuitiva aun la descripción de la función, también incluiremos un conjunto de llegada de dicha función y a la regla de asignación la escribiremos usando una flecha.
 
 = Combos de teoremas
 
