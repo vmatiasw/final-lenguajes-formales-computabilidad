@@ -8,6 +8,7 @@
   heading-color: black,
   it,
 )
+
 // Definición de símbolos
 #let Sast = $Sigma^ast$
 
@@ -191,8 +192,7 @@ Ley de los GOTO: Para cada $i in {1, ..., n}$, si GOTO $L overline(m)$ es un tra
 === $I^P_i$
 
 $lambda i P[I^P_i] : omega times "Pro"^Sigma &-> Sast\
-(i, P) &-> "i-esima instrucción de P contando desde el 1. " &"si" i in {1, ..., n(P)}\
-(i, P) &-> epsilon &"si" i in.not {1, ..., n(P)}$
+(i, P) &-> cases("i-esima instrucción de P" &"si" i in {1, ..., n(P)},epsilon &"si" i in.not {1, ..., n(P)})$
 
 === $n(P)$
 
@@ -202,8 +202,7 @@ P &-> m "tq" P = I_1 I_2...I_m$
 === $"Bas"$
 
 $"Bas" : "Ins"^Sigma &-> (Sigma union Sigma_p)^ast\
-I &-> J &"si" I "es de la forma" L overline(k) J "con" J in "Ins"^Sigma\
-I &-> I &"c.c."$
+I &-> cases(J &"si" I "es de la forma" L overline(k) J "con" J in "Ins"^Sigma,I &"c.c.")$
 
 == Combo 10: Defina relativo al lenguaje $S^Sigma$:
 === "estado"
@@ -223,21 +222,20 @@ Si $i in {1, ..., n(P)}$, $(i, arrow(x), arrow(sigma))$ nos dice que las variabl
 Dado un programa $P$.
 
 $S_P : "Des"^Sigma &-> "Des"^Sigma\
-(i, arrow(x), arrow(sigma)) &-> (i, arrow(x), arrow(sigma)) &"si" i in.not {1, ..., n(P)}\
-(i, arrow(s), arrow(sigma)) &-> (i + 1, (s_1, ..., s_k - 1, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(k) - 1\
-(i, arrow(s), arrow(sigma)) &-> (i + 1, (s_1, ..., s_k + 1, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(k) + 1\
-(i, arrow(s), arrow(sigma)) &-> (i + 1, (s_1, ..., s_n, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(n)\
-(i, arrow(s), arrow(sigma)) &-> (i + 1, (s_1, ..., 0, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- 0\
-(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" N overline(k) != 0 "GOTO" L overline(m) and s_k = 0\
-(i, arrow(s), arrow(sigma)) &-> (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" N overline(k) != 0 "GOTO" L overline(m) and s_k != 0\
-(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), (sigma_1, ..., arrow.cw.half sigma_k, ...)) &"si" "Bas"(I^P_i) = P overline(k) <- arrow.cw.half P overline(k)\
-(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), (sigma_1, ..., sigma_k a, ...)) &"si" "Bas"(I^P_i) = P overline(k) <- P overline(k) . a\
-(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), (sigma_1, ..., sigma_macron(n), ...)) &"si" "Bas"(I^P_i) = P overline(k) <- P overline(n)\
-(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), (sigma_1, ..., epsilon , ...)) &"si" "Bas"(I^P_i) = P overline(k) <- epsilon\
-(i, arrow(s), arrow(sigma)) &-> (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" P overline(k) "BEGINS" a "GOTO" L overline(m) and [sigma_k]_1 = a\
-(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" P overline(k) "BEGINS" a "GOTO" L overline(m) and [sigma_k]_1 != a\
-(i, arrow(s), arrow(sigma)) &-> (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "GOTO" L overline(m)\
-(i, arrow(s), arrow(sigma)) &-> (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "SKIP"$
+(i, arrow(x), arrow(sigma)) &-> cases((i, arrow(x), arrow(sigma)) &"si" i in.not {1, ..., n(P)}, (i + 1, (s_1, ..., s_k - 1, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(k) - 1,
+ (i + 1, (s_1, ..., s_k + 1, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(k) + 1,
+ (i + 1, (s_1, ..., s_n, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(n),
+ (i + 1, (s_1, ..., 0, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- 0,
+ (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" N overline(k) != 0 "GOTO" L overline(m) and s_k = 0,
+ (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" N overline(k) != 0 "GOTO" L overline(m) and s_k != 0,
+ (i + 1, arrow(s), (sigma_1, ..., arrow.cw.half sigma_k, ...)) &"si" "Bas"(I^P_i) = P overline(k) <- arrow.cw.half P overline(k),
+ (i + 1, arrow(s), (sigma_1, ..., sigma_k a, ...)) &"si" "Bas"(I^P_i) = P overline(k) <- P overline(k) . a,
+ (i + 1, arrow(s), (sigma_1, ..., sigma_macron(n), ...)) &"si" "Bas"(I^P_i) = P overline(k) <- P overline(n),
+ (i + 1, arrow(s), (sigma_1, ..., epsilon , ...)) &"si" "Bas"(I^P_i) = P overline(k) <- epsilon,
+ (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" P overline(k) "BEGINS" a "GOTO" L overline(m) and [sigma_k]_1 = a,
+ (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" P overline(k) "BEGINS" a "GOTO" L overline(m) and [sigma_k]_1 != a,
+ (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "GOTO" L overline(m),
+ (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "SKIP")$
 
 
 === "estado obtenido luego de $t$ pasos, partiendo del estado $(arrow(x), arrow(alpha))$"
