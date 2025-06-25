@@ -192,7 +192,7 @@ Ley de los GOTO: Para cada $i in {1, ..., n}$, si GOTO $L overline(m)$ es un tra
 === $I^P_i$
 
 $lambda i P[I^P_i] : omega times "Pro"^Sigma &-> Sast\
-(i, P) &-> cases("i-esima instrucción de P" &"si" i in {1, ..., n(P)},epsilon &"si" i in.not {1, ..., n(P)})$
+(i, P) &-> cases("i-esima instrucción de P" &"si" i in {1, ..., n(P)}, epsilon &"si" i in.not {1, ..., n(P)})$
 
 === $n(P)$
 
@@ -202,7 +202,7 @@ P &-> m "tq" P = I_1 I_2...I_m$
 === $"Bas"$
 
 $"Bas" : "Ins"^Sigma &-> (Sigma union Sigma_p)^ast\
-I &-> cases(J &"si" I "es de la forma" L overline(k) J "con" J in "Ins"^Sigma,I &"c.c.")$
+I &-> cases(J &"si" I "es de la forma" L overline(k) J "con" J in "Ins"^Sigma, I &"c.c.")$
 
 == Combo 10: Defina relativo al lenguaje $S^Sigma$:
 === "estado"
@@ -222,20 +222,22 @@ Si $i in {1, ..., n(P)}$, $(i, arrow(x), arrow(sigma))$ nos dice que las variabl
 Dado un programa $P$.
 
 $S_P : "Des"^Sigma &-> "Des"^Sigma\
-(i, arrow(x), arrow(sigma)) &-> cases((i, arrow(x), arrow(sigma)) &"si" i in.not {1, ..., n(P)}, (i + 1, (s_1, ..., s_k - 1, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(k) - 1,
- (i + 1, (s_1, ..., s_k + 1, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(k) + 1,
- (i + 1, (s_1, ..., s_n, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(n),
- (i + 1, (s_1, ..., 0, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- 0,
- (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" N overline(k) != 0 "GOTO" L overline(m) and s_k = 0,
- (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" N overline(k) != 0 "GOTO" L overline(m) and s_k != 0,
- (i + 1, arrow(s), (sigma_1, ..., arrow.cw.half sigma_k, ...)) &"si" "Bas"(I^P_i) = P overline(k) <- arrow.cw.half P overline(k),
- (i + 1, arrow(s), (sigma_1, ..., sigma_k a, ...)) &"si" "Bas"(I^P_i) = P overline(k) <- P overline(k) . a,
- (i + 1, arrow(s), (sigma_1, ..., sigma_macron(n), ...)) &"si" "Bas"(I^P_i) = P overline(k) <- P overline(n),
- (i + 1, arrow(s), (sigma_1, ..., epsilon , ...)) &"si" "Bas"(I^P_i) = P overline(k) <- epsilon,
- (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" P overline(k) "BEGINS" a "GOTO" L overline(m) and [sigma_k]_1 = a,
- (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" P overline(k) "BEGINS" a "GOTO" L overline(m) and [sigma_k]_1 != a,
- (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "GOTO" L overline(m),
- (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "SKIP")$
+(i, arrow(x), arrow(sigma)) &-> cases(
+  (i, arrow(x), arrow(sigma)) &"si" i in.not {1, ..., n(P)}, (i + 1, (s_1, ..., s_k - 1, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(k) - 1,
+  (i + 1, (s_1, ..., s_k + 1, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(k) + 1,
+  (i + 1, (s_1, ..., s_n, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- N overline(n),
+  (i + 1, (s_1, ..., 0, ...), arrow(sigma)) &"si" "Bas"(I^P_i) = N overline(k) <- 0,
+  (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" N overline(k) != 0 "GOTO" L overline(m) and s_k = 0,
+  (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" N overline(k) != 0 "GOTO" L overline(m) and s_k != 0,
+  (i + 1, arrow(s), (sigma_1, ..., arrow.cw.half sigma_k, ...)) &"si" "Bas"(I^P_i) = P overline(k) <- arrow.cw.half P overline(k),
+  (i + 1, arrow(s), (sigma_1, ..., sigma_k a, ...)) &"si" "Bas"(I^P_i) = P overline(k) <- P overline(k) . a,
+  (i + 1, arrow(s), (sigma_1, ..., sigma_macron(n), ...)) &"si" "Bas"(I^P_i) = P overline(k) <- P overline(n),
+  (i + 1, arrow(s), (sigma_1, ..., epsilon , ...)) &"si" "Bas"(I^P_i) = P overline(k) <- epsilon,
+  (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" P overline(k) "BEGINS" a "GOTO" L overline(m) and [sigma_k]_1 = a,
+  (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "IF" P overline(k) "BEGINS" a "GOTO" L overline(m) and [sigma_k]_1 != a,
+  (min { l : I^P_l "tiene label" L overline(m) }, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "GOTO" L overline(m),
+  (i + 1, arrow(s), arrow(sigma)) &"si" "Bas"(I^P_i) = "SKIP"
+)$
 
 
 === "estado obtenido luego de $t$ pasos, partiendo del estado $(arrow(x), arrow(alpha))$"
@@ -371,50 +373,49 @@ Dado un alfabeto $Sigma$ a las expresiones que cumplan las características dada
 
 == Combo 15: Dada una función $f : "Dom"_f subset.eq omega times Sast -> omega$, describa qué tipo de objeto es y qué propiedades debe tener el macro: [V2 ← f(V1,W1)]
 
-Dada una función $f : "Dom"_f subset.eq omega^n times Sast^m arrow.r omega$ $Sigma$-computable, escribiremos $V overline(n+1) <- f(V 1, ..., V overline(n), W 1, ..., W overline(m))$ para denotar un macro $M$ que cumple las propiedades:
+Dada una función $f : "Dom"_f subset.eq omega times Sast -> omega$ $Sigma$-computable, la palabra
+$ V overline(2) <- f(V 1, W 1) $
+denota a un macro $M$ que cumple lo siguiente:
 
-+ Las variables oficiales de $M$ son:
-  $V 1, ..., V overline(n), V overline(n+1), W 1, ..., W overline(m)$
-+ $M$ no tiene labels oficiales.
-+ Si reemplazamos:
-  + Las variables oficiales por variables concretas $N overline(k_1), ..., N overline(k_n), N overline(k_(n+1)), P overline(j_1), ..., P overline(j_m)$
-  + Las variables auxiliares de $M$ por variables concretas todas distintas entre sí y distintas de las ya mencionadas.
-  + Los labels auxiliares por labels concretos, también distintos entre sí.
++ Sus variables oficiales son: $V 1, V 2, W 1$
++ No tiene labels oficiales.
++ Si reemplazamos (tanto oficiales como auxiliares en cada caso):
+  + Las variables $V overline(k')$ por variables concretas $N overline(k)$ con $k$ distintos entre si.
+  + Las variables $W overline(j')$ por variables concretas $P overline(j)$ con $j$ distintos entre si.
+  + Los labels $A overline(z')$ por labels concretos $L overline(z)$ con $z$ distintos entre si.
+  Obtenemos la palabra $N overline(k_2) <- f(N overline(k_1), P overline(j_1))$ la cual es un programa de $S^Sigma$.
 
-  Entonces, la palabra así obtenida es un programa de $S^Sigma$ que denotamos $N overline(k_(n+1)) <- f(N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m))$ y debe satisfacer que si lo corremos partiendo de un estado $e$ que le asigne a las variables $N overline(k_1), ..., N overline(k_n), N overline(k_(n+1)), P overline(j_1), ..., P overline(j_m)$ valores $x_1 , ..., x_n , alpha_1 , ..., alpha_m$ , entonces independientemente de los valores que les asigne $e$ al resto de las variables se dará que:
+  El cual debe cumplir que: Si lo hacemos correr partiendo de un estado $e$ que le asigne a las variables $N overline(k_1), N overline(k_2), P overline(j_1)$ valores $x_1, x_2, alpha_1$, se dará que
+  + Si $(x_1, alpha_1) in.not "Dom"_P$, el programa no se detiene.
+  + Si $(x_1, alpha_1) in "Dom"_P$, luego de una cantidad finita de pasos el programa se detiene llegando a un estado $e'$ tq:
+      + $e'$ asigna a $N overline(k_2)$ el valor $f(x_1, alpha_1)$;
+      + $e'$ solo difiere de $e$ en el valor de $N overline(k_2)$ y en las variables que reemplazaron a las auxiliares de $M$.
 
-  + Si $(arrow(x), arrow(alpha)) in.not "Dom"_f$, entonces el programa no se detiene.
-  + Si $(arrow(x), arrow(alpha)) in "Dom"_f$, entonces:
-    - El programa se detiene;
-    - Llega a un estado $e'$ tq:
-      + $e'$ asigna a $N overline(k_(n+1))$ el valor $f(arrow(x), arrow(alpha))$;
-      + $e'$ solo difiere de $e$ en el valor de $N overline(k_(n+1))$ y en aquellas variables que reemplazaron a las variables auxiliares de $M$. 
-
-La palabra $N overline(k_(n+1)) <- f(N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m))$ se denomina la expansión del macro $V overline(n+1) <- f(V 1, ..., V overline(n), W 1, ..., W overline(m))$ respecto de la elección concreta de variables y labels realizada.
+La palabra $N overline(k_2) <- f(N overline(k_1), P overline(j_1))$ se denomina la expansión del macro $V 2 <- f(V 1, W 1)$ respecto de la elección concreta de variables y labels realizada.
 
 == Combo 16: Dado un predicado $p : D_f subset.eq omega times Sast -> omega$, describa qué tipo de objeto es y qué propiedades debe tener el macro: [IF P(V1,W1) GOTO A1]
 
-Dado un predicado $P : "Dom"_P subset.eq omega^n times Sast^m -> {0, 1}$ $Sigma$-computable, escribiremos $["IF" P(V 1, ..., V overline(n), W 1, ..., W overline(m)) "GOTO" A 1]$ para denotar un macro $M$ que cumple las siguientes propiedades:
+Dado un predicado $P : "Dom"_P subset.eq omega times Sast -> {0, 1}$ $Sigma$-computable, la palabra
+$ ["IF" P(V 1, W 1) "GOTO" A 1] $
+denota a un macro $M$ que cumple lo siguiente:
 
-+ Las variables oficiales de $M$ son: $V 1, ..., V overline(n), W 1, ..., W overline(m)$
-+ $A 1$ es el único label oficial de $M$.
-+ Si reemplazamos:
-  + Las variables oficiales por variables concretas:  
-    $N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m)$
-  + El label oficial $A 1$ por un label concreto $L overline(k)$
-  + Las variables auxiliares por variables concretas, todas distintas entre sí y distintas de las ya mencionadas
-  + Los labels auxiliares por labels concretos, todos distintos entre sí y distintos de $L overline(k)$
++ Sus variables oficiales son: $V 1, W 1$
++ $A 1$ es su único label oficial.
++ Si reemplazamos (tanto oficiales como auxiliares en cada caso):
+  + Las variables $V overline(k')$ por variables concretas $N overline(k)$ con $k$ distintos entre si.
+  + Las variables $W overline(j')$ por variables concretas $P overline(j)$ con $j$ distintos entre si.
+  + Los labels $A overline(z')$ por labels concretos $L overline(z)$ con $z$ distintos entre si.
+  Obtenemos la palabra $["IF" P(N overline(k_1), P overline(j_1)) "GOTO" L overline(z_1)]$ la cual, si se cumple la ley del GOTO respecto a $L overline(z_1)$, es un programa de $S^Sigma$.
 
-  Entonces, la palabra así obtenida es un programa de $S^Sigma$ (salvo por la ley del GOTO respecto de $L overline(k)$) que denotaremos $["IF" P(N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m)) "GOTO" L overline(k)]$ y debe satisfacer que si lo corremos partiendo de un estado $e$ que le asigne a las variables $N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m)$ valores $x_1 , ..., x_n , alpha_1 , ..., alpha_m$ , entonces independientemente de los valores que les asigne $e$ al resto de las variables se dará que
-    + Si $(arrow(x), arrow(alpha)) in.not "Dom"_P$, el programa no se detiene.
-    + Si $(arrow(x), arrow(alpha)) in "Dom"_P$ y $P(arrow(x), arrow(alpha)) = 1$, entonces:
-      - Luego de una cantidad finita de pasos, se salta al label $L overline(k)$.
-      - El estado alcanzado $e'$ también solo puede diferir de $e$ en las variables que reemplazaron a las auxiliares de $M$, y no modifica las demás.
-    + Si $(arrow(x), arrow(alpha)) in "Dom"_P$ y $P(arrow(x), arrow(alpha)) = 0$, entonces:
-      - Luego de una cantidad finita de pasos, el programa se detiene.
-      - El estado alcanzado $e'$ también solo puede diferir de $e$ en las variables que reemplazaron a las auxiliares de $M$, y no modifica las demás.
+  El cual debe cumplir que: Si lo hacemos correr partiendo de un estado $e$ que le asigne a las variables $N overline(k_1), P overline(j_1)$ valores $x_1, alpha_1$, se dará que
+  + Si $(x_1, alpha_1) in.not "Dom"_P$, el programa no se detiene.
+  + Si $(x_1, alpha_1) in "Dom"_P$, luego de una cantidad finita de pasos:
+    + Si $P(x_1, alpha_1) = 1$, se salta al label $L overline(z_1)$.
+    + Si $P(x_1, alpha_1) = 0$, el programa se detiene.
 
-La palabra $["IF" P(N overline(k_1), ..., N overline(k_n), P overline(j_1), ..., P overline(j_m)) "GOTO" L overline(k)]$ se denomina la expansión del macro $["IF" P(V 1, ..., V overline(n), W 1, ..., W overline(m)) "GOTO" A 1]$ respecto de la elección concreta de variables y labels realizada.
+    En ambos casos, el estado alcanzado $e'$ solo puede diferir de $e$ en las variables que reemplazaron a las auxiliares de $M$.
+
+La palabra $["IF" P(N overline(k_1), P overline(j_1)) "GOTO" L overline(z_1)]$ se denomina la expansión del macro $["IF" P(V 1, W 1) "GOTO" A 1]$ respecto de la elección concreta de variables y labels realizada.
 
 
 == Combo 17: Defina el concepto de función y desarrolle las tres Convenciones Notacionales asociadas a dicho concepto
@@ -425,16 +426,34 @@ Dada una función $f$, definimos:
 - $"Dom"_f = {x : (x, y) in f "para algún" y}$
 - $"Im"_f = {y : (x, y) in f "para algún" x}$
 
-Dado $x in "Dom"_f$, usaremos $f (x)$ para denotar al único $y in "Im"_f$ tq $(x, y) in f$.
+Las convenciones notacionales son:
+- Dado $x in "Dom"_f$, usaremos $f (x)$ para denotar al único $y in "Im"_f$ tq $(x, y) in f$.
+- Escribimos $f : S subset.eq A -> B$ para expresar que $f$ es una función tq $"Dom"_f = S subset.eq A$ y $"Im"_f subset.eq B$. También escribimos $f : A -> B$ si $S = A$. En tal contexto llamaremos a $B$ conjunto de llegada.
+- Muchas veces para definir una función $f$, lo haremos dando su dominio y su regla de asignación. Esto determina por completo a $f$ ya que $f = {(x, f(x)) : x in "Dom"_f }$.
+  #grid(
+  columns: 3,
+  gutter: 1.5em,
+  align: (left, center, right),
 
-Nótese que $emptyset$ es una función y que
-$"Dom"_emptyset = "Im"_emptyset = emptyset$.
+  [Básico],
+  [Con conjunto de llegada y flechas],
+  [Con flechas y por casos],
 
-Escribimos $f : S subset.eq A -> B$ para expresar que $f$ es una función tq $"Dom"_f = S subset.eq A$ y $"Im"_f subset.eq B$. También escribimos $f : A -> B$ si $S = A$. En tal contexto llamaremos a $B$ conjunto de llegada.
+  [$"Dom"_f = omega \
+    f(x) = 23 x$],
 
-Muchas veces para definir una función $f$, lo haremos dando su dominio y su regla de asignación.
+  [$f : omega &-> omega \
+    x &-> 23 x$],
 
-Ademas, para hacer mas intuitiva aun la descripción de la función, también incluiremos un conjunto de llegada de dicha función y a la regla de asignación la escribiremos usando una flecha.
+  [$f : NN &-> omega \
+    x &-> 
+      cases(
+        x + 1 &"si x es par",
+        x + 2 &"si x es impar"
+      )$],
+)
+
+
 
 = Combos de teoremas
 
