@@ -12,6 +12,16 @@
 // Definición de símbolos
 #let Sast = $Sigma^ast$
 
+= Convenciones
+
+Si no se especifica lo contrario, usaremos las siguientes convenciones:
++ $x, y, z, u, v, w, n, m, k, ... in omega$
++ $alpha, beta, gamma, delta, epsilon, psi, eta, ... in Sast$
++ $O in {omega, Sast}$
++ "tq" es "tal que"
++ $Sigma$-pr es "$Sigma$-primitivo recursivo"
++ Sea $f : "Dom"_f -> {0, 1}$, entonces $f$ es un predicado.
+
 = Combos de definiciones y convenciones notacionales
 
 == Combo 1: Defina:
@@ -28,24 +38,26 @@ Dada una infinitupla $(s_1, s_2, ...) ∈ omega^([NN])$ usaremos $angle.l s_1, s
 Sea $Sigma$ un alfabeto finito. Una función $f$ es $Sigma$-mixta si:
 + $(exists n, m in omega) "Dom"_f subset.eq omega^n times Sast^m$
 
-+ $"Im"_f subset.eq O in {omega, Sast}$
++ $"Im"_f subset.eq O$
 
 === "familia $Sigma$-indexada de funciones"
 
-Dado un alfabeto $Sigma$, una familia $Sigma$-indexada de funciones sera una función $G: Sigma -> "Im"_G$ donde $"Im"_G$ es el conjunto de funciones $G(a)$ asociadas a cada $a in Sigma$.
+Dado un alfabeto $Sigma$, una familia $Sigma$-indexada de funciones sera una función $rho.alt: Sigma -> "Im"_G$ donde $"Im"_G$ es el conjunto de funciones $rho.alt(a)$ asociadas a cada $a in Sigma$.
 
-NOTACIÓN: Si $G$ es una familia $Sigma$-indexada de funciones, entonces para $a in Sigma$, escribiremos $G_a$ en lugar de $G(a)$.
+NOTACIÓN: Si $rho.alt$ es una familia $Sigma$-indexada de funciones, entonces para $a in Sigma$, escribiremos $rho.alt_a$ en lugar de $rho.alt(a)$.
 
-=== $R(f, G)$: Recursion primitiva sobre variable alfabética con valores numéricos.
+=== $R(f, rho.alt)$: Recursion primitiva sobre variable alfabética con valores numéricos.
+Sean $S_1, ..., S_n subset.eq omega$ y $L_1, ..., L_m subset.eq Sast$ conjuntos no vacíos.
 
-Sea una función $f : S_1 times ... times S_n times L_1 times ... times L_m -> omega$ con $S_1, ..., S_n subset.eq omega$ y $L_1, ..., L_m subset.eq Sast$ conjuntos no vacíos.
+Sea una función $f : S_1 times ... times S_n times L_1 times ... times L_m -> omega$.
 
-Sea una familia $Sigma$-indexada de funciones $G_a : omega times S_1 times ... times S_n times L_1 times ... times L_m times Sast -> omega$ para cada $a in Sigma$.
+Sea una familia $Sigma$-indexada de funciones $rho.alt_a : omega times S_1 times ... times S_n times L_1 times ... times L_m times Sast -> omega$ para cada $a in Sigma$.
 
-Definimos recursivamente la función $R(f, G) : S_1 times ... times S_n times L_1 times ... times L_m times Sast -> omega$ de la siguiente manera:
-+ $R(f, G)(arrow(x), arrow(alpha), epsilon) = f(arrow(x), arrow(alpha))$
-+ $R(f, G)(arrow(x), arrow(alpha), alpha a) = G_a (R(f, G)(arrow(x), arrow(alpha), alpha), arrow(x), arrow(alpha), alpha)$
-También diremos que $R(f, g)$ es obtenida por recursion primitiva a partir de f y G.
+$R(f, rho.alt) : S_1 times ... times S_n times L_1 times ... times L_m times Sast &-> omega\
+(arrow(x), arrow(alpha), epsilon) &-> f(arrow(x), arrow(alpha))\
+(arrow(x), arrow(alpha), alpha a) &-> rho.alt_a (R(f, rho.alt)(arrow(x), arrow(alpha), alpha), arrow(x), arrow(alpha), alpha)$
+
+También diremos que $R(f, rho.alt)$ es obtenida por recursion primitiva a partir de $f$ y $rho.alt$.
 
 == Combo 2: Defina:
 === $d tack.r^n d'$ y $d tack.r^ast d'$
@@ -112,7 +124,7 @@ a_i_k...a_i_0 &-> i_k n^k+...+i_0 n^0$
 
 == Combo 4: Defina cuando una función $f : D_f subset.eq omega^n times Sast^m -> omega$ es llamada $Sigma$-efectivamente computable y defina "el procedimiento $P$ computa a la función $f$"
 
-Sea $O in {omega, Sast}$. Una función $Sigma$-mixta $f : "Dom"_f subset.eq omega^n times Sast^m -> O$ sera llamada $Sigma$-efectivamente computable si hay un procedimiento efectivo $P$ tq
+Sea $O$. Una función $Sigma$-mixta $f : "Dom"_f subset.eq omega^n times Sast^m -> O$ sera llamada $Sigma$-efectivamente computable si hay un procedimiento efectivo $P$ tq
 + El conjunto de datos de entrada de $P$ es $omega^n times Sast^m$
 + El conjunto de datos de salida esta contenido en $O$.
 + Si $(arrow(x), arrow(alpha)) in "Dom"_f$, entonces $P$ se detiene partiendo de $(arrow(x), arrow(alpha))$, dando como dato de salida $f(arrow(x), arrow(alpha)).$
@@ -271,7 +283,7 @@ En tal caso diremos que la función $f$ es computada por $P$.
 === $M^<= (P)$ Minimización de variable alfabética
 
 Sea que $Sigma != emptyset$. Sea $<=$ un orden
-total sobre $Sigma$, $<=$ puede ser naturalmente extendido a un orden total sobre $Sast$. Sea $P : "Dom"_P subset.eq omega^n times Sast^m times Sast$ un predicado. Cuando $(arrow(x), arrow(alpha)) in omega^n times Sast^m$ es tq existe al menos un $alpha in Sast$ tq $P(arrow(x), arrow(alpha), alpha) = 1$, usaremos $min^<=_{alpha} P(arrow(x), arrow(alpha), alpha)$ para denotar al menor $alpha in Sast$ tq $P(arrow(x), arrow(alpha), alpha) = 1$.
+total sobre $Sigma$, $<=$ puede ser naturalmente extendido a un orden total sobre $Sast$. Sea $P : "Dom"_P subset.eq omega^n times Sast^m times Sast$ un predicado. Cuando $(arrow(x), arrow(alpha)) in omega^n times Sast^m$ es tq existe al menos un $alpha in Sast$ tq $P(arrow(x), arrow(alpha), alpha) = 1$, usaremos $min^<=_alpha P(arrow(x), arrow(alpha), alpha)$ para denotar al menor $alpha in Sast$ tq $P(arrow(x), arrow(alpha), alpha) = 1$.
 
 Definimos $M^<= (P) = lambda arrow(x) arrow(alpha) [min^<=_alpha P(arrow(x), arrow(alpha), alpha)]$
 
@@ -388,8 +400,8 @@ denota a un macro $M$ que cumple lo siguiente:
   El cual debe cumplir que: Si lo hacemos correr partiendo de un estado $e$ que le asigne a las variables $N overline(k_1), N overline(k_2), P overline(j_1)$ valores $x_1, x_2, alpha_1$, se dará que
   + Si $(x_1, alpha_1) in.not "Dom"_P$, el programa no se detiene.
   + Si $(x_1, alpha_1) in "Dom"_P$, luego de una cantidad finita de pasos el programa se detiene llegando a un estado $e'$ tq:
-      + $e'$ asigna a $N overline(k_2)$ el valor $f(x_1, alpha_1)$;
-      + $e'$ solo difiere de $e$ en el valor de $N overline(k_2)$ y en las variables que reemplazaron a las auxiliares de $M$.
+    + $e'$ asigna a $N overline(k_2)$ el valor $f(x_1, alpha_1)$;
+    + $e'$ solo difiere de $e$ en el valor de $N overline(k_2)$ y en las variables que reemplazaron a las auxiliares de $M$.
 
 La palabra $N overline(k_2) <- f(N overline(k_1), P overline(j_1))$ se denomina la expansión del macro $V 2 <- f(V 1, W 1)$ respecto de la elección concreta de variables y labels realizada.
 
@@ -431,45 +443,148 @@ Las convenciones notacionales son:
 - Escribimos $f : S subset.eq A -> B$ para expresar que $f$ es una función tq $"Dom"_f = S subset.eq A$ y $"Im"_f subset.eq B$. También escribimos $f : A -> B$ si $S = A$. En tal contexto llamaremos a $B$ conjunto de llegada.
 - Muchas veces para definir una función $f$, lo haremos dando su dominio y su regla de asignación. Esto determina por completo a $f$ ya que $f = {(x, f(x)) : x in "Dom"_f }$.
   #grid(
-  columns: 3,
-  gutter: 1.5em,
-  align: (left, center, right),
+    columns: 3,
+    gutter: 1.5em,
+    align: (left, center, right),
 
-  [Básico],
-  [Con conjunto de llegada y flechas],
-  [Con flechas y por casos],
+    [Básico], [Con conjunto de llegada y flechas], [Con flechas y por casos],
 
-  [$"Dom"_f = omega \
-    f(x) = 23 x$],
+    [$"Dom"_f = omega \
+      f(x) = 23 x$],
 
-  [$f : omega &-> omega \
-    x &-> 23 x$],
+    [$f : omega &-> omega \
+      x &-> 23 x$],
 
-  [$f : NN &-> omega \
-    x &-> 
+    [$f : NN &-> omega \
+      x &->
       cases(
         x + 1 &"si x es par",
         x + 2 &"si x es impar"
       )$],
-)
-
-
+  )
 
 = Combos de teoremas
 
 == Combo 1
-+ *Proposición* (Caracterización de conjuntos $Sigma$-p.r.): Un conjunto $S$ es $Sigma$-p.r. sii $S$ es el dominio de alguna función $Sigma$-p.r. (En la inducción de la prueba hacer solo el caso de la composición)
+=== Proposición: Caracterización de conjuntos $Sigma$-pr
+#let Proposición19 = [Sea $S subset.eq omega^n times Sast^m$.
+  Entonces, $S$ es $Sigma$-pr sii $S$ es el dominio de alguna función $Sigma$-pr.]
+#Proposición19 (En la inducción de la prueba hacer solo el caso de la composición)
 
-+ *Teorema* (Neumann vence a Gödel): Si $h$ es $Sigma$-recursiva, entonces $h$ es $Sigma$-computable. (En la inducción de la prueba hacer solo el caso $h = R(f, G)$, con $I_h subset.eq omega$)
+*Prueba $=>$*
+
+Sea $S$ $Sigma$-pr.\
+Entonces, $chi^(omega^n times Sast^m)_S$ es $Sigma$-pr para algún $n, m in omega$.\
+Para ese caso, $"pred" compose chi^(omega^n times Sast^m)_S$ es una función $Sigma$-pr y $S = "Dom"_("pred" compose chi^(omega^n times Sast^m)_S)$
+
+*Prueba $arrow.l.double$*
+
+Sea S el dominio de una función $Sigma$-pr $f : "Dom"_f subset.eq omega^n times Sast^m -> O$.\
+Probaremos por inducción en $k$ que $"Dom"_F$ es $Sigma$-pr, para cada $F in "PR"^Sigma_k$:
+
++ Caso $k = 0$:
+  $"PR"^Sigma_0 = {"suc", "pred", C^(0,0)_0, C^(0,0)_epsilon} union {d_a : a in Sigma} union {p^(n,m)_j : 1 <= j <= n + m}$
+  Los dominios de las funciones $"suc", C^(0,0)_0, C^(0,0)_epsilon, d_a, p^(n,m)_j$ son de la forma $omega^n times Sast^m$ y $omega$ y $Sast$ son $Sigma$-pr, por el "Lema 16" son $Sigma$-pr.\
+  Finalmente, $chi^omega_"Dom"_"Pred" = lambda x [x!=0]$ es $Sigma$-pr, por definición $"Dom"_"Pred"$ es $Sigma$-pr
+
++ Supongamos que $"Dom"_F$ es $Sigma$-pr $forall F in "PR"^Sigma_(k)$.
+
++ Sea $F in "PR"^Sigma_(k + 1)$. Veremos entonces que $"Dom"_F$ es $Sigma$-pr solo para el caso de composición:\
+  Si $F = emptyset$, entonces es claro que $"Dom"_F = emptyset$ es $Sigma$-pr.\
+  Sea $F = g compose [g_1, ..., g_(n+m)]$ no vacío, con $g, g_1, ..., g_(n+m) in "PR"^Sigma_k$.
+  - $g : "Dom"_g subset.eq omega^n times Sast^m -> O$
+  - $g_i : "Dom"_g_i subset.eq omega^k times Sast^l -> omega$ para $i = 1, ..., n$
+  - $g_i : "Dom"_g_i subset.eq omega^k times Sast^l -> Sast$ para $i = n+1, ..., n+m$
+
+  Por hipótesis inductiva, los conjuntos $"Dom"_g, "Dom"_g_i$ son $Sigma$-pr.\
+  Por "Lema 15", $S = inter.big_(i=1)^(n + m) "Dom"_g_i$ es $Sigma$-pr.\
+
+  Por "Lema 20", $chi^(omega^k times Sast^l)_("Dom"_F)(arrow(x), arrow(alpha)) = cases(chi^(omega^n times Sast^m)_("Dom"_g) compose [g_1, ..., g_(n+m)] &"si" (arrow(x), arrow(alpha)) in S, C^(k,l)_0 &"si" (arrow(x), arrow(alpha)) in omega^k times Sast^l - S)$ es $Sigma$-pr.
+
+  Por lo tanto $"Dom"_F$ es $Sigma$-pr
+
+
+=== Teorema: Neumann vence a Gödel
+Si $h$ es $Sigma$-recursiva, entonces $h$ es $Sigma$-computable. (En la inducción de la prueba hacer solo el caso $h = R(f, rho.alt)$, con $I_h subset.eq omega$)
+
+*Prueba:*
+
+Probaremos por inducción en $k$ que:  Si $h in R^Sigma_k$, entonces $h$ es $Sigma$-computable:
+
++ Caso k=0: $"R"^Sigma_0 = "PR"^Sigma_0 = {"suc", "pred", C^(0,0)_0, C^(0,0)_epsilon} union {d_a : a in Sigma} union {p^(n,m)_j : 1 <= j <= n + m}$ Por lo que dados los programas que los computan (dejado al lector), entonces son $Sigma$-computables.
+
++ Supongamos que $h in R^Sigma_k => h$ es $Sigma$-computable.
+
++ Veamos que $h in R^Sigma_(k+1) - R_k => h$ es $Sigma$-computable  para el caso $h = R(f, rho.alt)$ con $"Im"_h subset.eq omega$.\
+  Sean
+  - $Sigma = {a_1, ..., a_r}$
+  - $(f in R^Sigma_k) f: S_1 times ... times S_n times L_1 times ... times L_m -> omega$
+  - $(forall a in Sigma, rho.alt_a in R^Sigma_k) rho.alt_a : omega times S_1 times ... times S_n times L_1 times ... times L_m times Sast -> omega$
+
+  Por hipótesis inductiva, $f$ y cada $rho.alt_a$ son $Sigma$-computables por lo que existen sus macros.\
+  Recordemos:
+
+  $
+    R(f, rho.alt) : S_1 times ... times S_n times L_1 times ... times L_m times Sast &-> omega\
+    (arrow(x), arrow(alpha), epsilon) &-> f(arrow(x), arrow(alpha))\
+    (arrow(x), arrow(alpha), alpha a) &-> rho.alt_a (R(f, rho.alt)(arrow(x), arrow(alpha), alpha), arrow(x), arrow(alpha), alpha)
+  $
+
+  Entonces, construimos el siguiente programa usando macros:
+
+  $
+    &N overline(n+1) <- f(N 1, ..., N overline(n), P 1, ..., P overline(m))\
+    L overline(r+1): &"IF" P overline(m+1) "BEGINS" a_1 "GOTO" L 1\
+    &dots.v\
+    &"IF" P overline(m+1) "BEGINS" a_r "GOTO" L r\
+    &"GOTO" L overline(r+2)\
+    L 1: &P overline(m+1) <- arrow.cw.half P overline(m+1)\
+    &N overline(n+1) <- rho.alt_(a_1)(N overline(n+1), N 1, ..., N overline(n), P 1, ..., P overline(m), P overline(m+2))\
+    &P overline(m+2) <- P overline(m+2).a_1\
+    &"GOTO" L overline(r+1)\
+    &dots.v\
+    L r: &P overline(m+1) <- arrow.cw.half P overline(m+1)\
+    &N overline(n+1) <- rho.alt_(a_r)(N overline(n+1), N 1, ..., N overline(n), P 1, ..., P overline(m), P overline(m+2))\
+    &P overline(m+2) <- P overline(m+2).a_r\
+    &"GOTO" L overline(r+1)\
+    L overline(r+2): &N 1 <- N overline(n+1)
+  $
+
+  Este programa computa h.
 
 == Combo 2
-+ *Lema* (Lema de división por casos para funciones $Sigma$-p.r.): Supongamos $f_i : D_f_i subset.eq omega^n times Sast^m -> Sast$, $i = 1, ..., k$, son funciones $Sigma$-p.r. tales que $D_f_i inter D_f_j = emptyset$ para $i != j$. Entonces $f_1 inter ... inter f_k$ es $Sigma$-p.r. (Hacer el caso $k = 2$, $n = 2$ y $m = 1$)
+=== Lema 20: Lema de división por casos para funciones $Sigma$-pr
+#let Lema20 = [Si $f_i : "Dom"_f_i subset.eq omega^n times Sast^m -> O$ para $i=1,...,k$ son $Sigma$-pr tq si $i != j => "Dom"_f_i inter "Dom"_f_j = emptyset$, entonces la función $f = union.big_(i=1)^k f_i$ es también $Sigma$-pr.]
 
-+ *Proposición* (Caracterización básica de conjuntos $Sigma$-enumerables): Sea $S subset.eq omega^n times Sast^m$ un conjunto no vacío. Entonces son equivalentes:
-  + $S$ es $Sigma$-enumerable
-  + Hay un programa $P in "Pro"^Sigma$ tq:
-    + Para cada $x in omega$, $P$ se detiene partiendo desde el estado $⟦x⟧$ y llega a un estado de la forma $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$, donde $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$
-    + Para cada $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$ hay un $x in omega$ tq $P$ se detiene partiendo desde el estado $⟦x⟧$ y llega a un estado como en $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$
+#Lema20 (Hacer el caso $O = Sast$, $k = 2$, $n = 2$ y $m = 1$)
+
+*Prueba:*
+
+Supongamos $O = Sast$, $i = 1, 2$, $n = 2$ y $m = 1$.\
+Sean $f_i : "Dom"_f_i subset.eq omega^2 times Sast^2 -> Sast$ $Sigma$-pr tq si $i != j => "Dom"_f_i inter "Dom"_f_j = emptyset$.
+
+Por "Lema 18", existen funciones $Sigma$-totales $Sigma$-pr $overline(f)_i : omega^2 times Sast^2 -> Sast$ tq $f_i = overline(f)_i|_"Dom"_(f_i)$.\
+Por "Proposición 19", los conjuntos $"Dom"_(f_1)$ y $"Dom"_(f_2)$ son $Sigma$-pr.\
+Por lo tanto, por "Lema 15", también lo es su unión: $"Dom"_(f_1) union "Dom"_(f_2)$.\
+Finalmente, por "Lema 17",
+$
+  f_1 union f_2 =
+  ( lambda alpha beta [alpha beta] compose
+    [ lambda x alpha [alpha^x] compose
+      [ chi^(omega^n times Sast^m)_"Dom"_(f_1), overline(f)_1 ]
+      union lambda x alpha [alpha^x] compose
+      [ chi^(omega^n times Sast^m)_"Dom"_(f_2), overline(f)_2 ]
+    ]
+  )|_("Dom"_(f_1) union "Dom"_(f_2))
+$
+es $Sigma$-pr.
+
+=== Proposición: Caracterización básica de conjuntos $Sigma$-enumerables
+Sea $S subset.eq omega^n times Sast^m$ un conjunto no vacío. Entonces son equivalentes:
++ $S$ es $Sigma$-enumerable
++ Hay un programa $P in "Pro"^Sigma$ tq:
+  + Para cada $x in omega$, $P$ se detiene partiendo desde el estado $⟦x⟧$ y llega a un estado de la forma $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$, donde $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$
+  + Para cada $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$ hay un $x in omega$ tq $P$ se detiene partiendo desde el estado $⟦x⟧$ y llega a un estado como en $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$
 (Hacer el caso $n = 2$ y $m = 1$)
 
 == Combo 3
@@ -483,16 +598,16 @@ Las convenciones notacionales son:
 == Combo 4
 + *Proposición* (Caracterización básica de conjuntos $Sigma$-enumerables): (igual a Combo 2, hacer caso $n = 2$, $m = 1$)
 
-+ *Lema* (Lema de la sumatoria): Sea $Sigma$ un alfabeto finito. Si $f : omega times S_1 times ... times S_n times L_1 times ... times L_m -> omega$ es $Sigma$-p.r., con $S_i subset.eq omega$ y $L_j subset.eq Sast$ no vacíos, entonces
-$lambda x y arrow(x) arrow(alpha). sum_t=x^y f(t, arrow(x), arrow(alpha))$ es $Sigma$-p.r.
++ *Lema* (Lema de la sumatoria): Sea $Sigma$ un alfabeto finito. Si $f : omega times S_1 times ... times S_n times L_1 times ... times L_m -> omega$ es $Sigma$-pr, con $S_i subset.eq omega$ y $L_j subset.eq Sast$ no vacíos, entonces
+$lambda x y arrow(x) arrow(alpha). sum_t=x^y f(t, arrow(x), arrow(alpha))$ es $Sigma$-pr
 
 == Combo 5
-+ *Lema*: Sea $Sigma = @, %, !$ y $f : S_1 times S_2 times L_1 times L_2 -> omega$, con $S_1, S_2 subset.eq omega$ y $L_1, L_2 subset.eq Sast$ no vacíos. Sea $G$ una familia $Sigma$-indexada de funciones $G_a : omega times S_1 times S_2 times L_1 times L_2 times Sast -> omega$ para cada $a in Sigma$.
-Si $f$ y cada $G_a$ son $Sigma$-efectivamente computables, entonces $R(f, G)$ lo es.
++ *Lema*: Sea $Sigma = @, %, !$ y $f : S_1 times S_2 times L_1 times L_2 -> omega$, con $S_1, S_2 subset.eq omega$ y $L_1, L_2 subset.eq Sast$ no vacíos. Sea $rho.alt$ una familia $Sigma$-indexada de funciones $rho.alt_a : omega times S_1 times S_2 times L_1 times L_2 times Sast -> omega$ para cada $a in Sigma$.
+Si $f$ y cada $rho.alt_a$ son $Sigma$-efectivamente computables, entonces $R(f, rho.alt)$ lo es.
 (Ejercicio de la Guía 5)
 
-+ *Lema* (Lema de cuantificación acotada): Sea $p : S times S_1 times ... times S_n times L_1 times ... times L_m -> omega$ un predicado $Sigma$-p.r., y $dash(S) subset.eq S$ un conjunto $Sigma$-p.r. Entonces
-$lambda x arrow(x) arrow(alpha)[ (forall t in dash(S))_(t <= x) P(t, arrow(x), arrow(alpha))]$ es $Sigma$-p.r.
++ *Lema* (Lema de cuantificación acotada): Sea $p : S times S_1 times ... times S_n times L_1 times ... times L_m -> omega$ un predicado $Sigma$-pr, y $dash(S) subset.eq S$ un conjunto $Sigma$-pr Entonces
+$lambda x arrow(x) arrow(alpha)[ (forall t in dash(S))_(t <= x) P(t, arrow(x), arrow(alpha))]$ es $Sigma$-pr
 
 == Combo 6
 + *Lema*: Si $S subset.eq omega^n times Sast^m$ es $Sigma$-efectivamente computable, entonces $S$ es $Sigma$-efectivamente enumerable
@@ -504,9 +619,9 @@ $lambda x arrow(x) arrow(alpha)[ (forall t in dash(S))_(t <= x) P(t, arrow(x), a
 (Hacer la prueba de $(2) -> (3)$, con $k = l = 1$ y $n = m = 2$)
 
 == Combo 7
-+ *Lema* (Lema de minimización acotada): Sean $n, m >= 0$. Sea $p : D_nu subset.eq omega times omega^n times Sast^m -> omega$ un predicado $Sigma$-p.r.
++ *Lema* (Lema de minimización acotada): Sean $n, m >= 0$. Sea $p : D_nu subset.eq omega times omega^n times Sast^m -> omega$ un predicado $Sigma$-pr
 (a) $M(P)$ es $Sigma$-recursiva
-(b) Si existe una función $f : omega^n times Sast^m -> omega$ $Sigma$-p.r. tq $M(P)(arrow(x), arrow(alpha)) = min_t P(t, arrow(x), arrow(alpha)) <= f(arrow(x), arrow(alpha))$, entonces $M(P)$ es $Sigma$-p.r.
+(b) Si existe una función $f : omega^n times Sast^m -> omega$ $Sigma$-pr tq $M(P)(arrow(x), arrow(alpha)) = min_t P(t, arrow(x), arrow(alpha)) <= f(arrow(x), arrow(alpha))$, entonces $M(P)$ es $Sigma$-pr
 
 + *Lema*: Si $f : D_f subset.eq omega^n times Sast^m -> O$ es $Sigma$-recursiva y $S subset.eq D_f$ es $Sigma$-r.e., entonces $f|S$ es $Sigma$-recursiva
 (Hacer solo el caso $S$ no vacío, $n = m = 1$ y $O = Sast$)
@@ -527,3 +642,42 @@ Además, el conjunto $N = p in "Pro"^Sigma : "AutoHalt"^Sigma(P) = 0$ no es $Sig
 (Hacer el caso $k = 2$, $n = m = 1$ y $O = omega$)
 
 + *Teorema* (Gödel vence a Neumann): Si $f : D_f subset.eq omega^n times Sast^m -> omega$ es $Sigma$-computable, entonces $f$ es $Sigma$-recursiva
+
+= Utilidades
+
+== Lema 14.
+
+Sean $P : S subset.eq omega^n times Sast^m -> {0, 1}$ y $Q : S subset.eq omega^n times Sast^m -> {0, 1}$ $Sigma$-pr, entonces también lo son: $(P or Q)$, $(P and Q)$ y $not P$.
+
+
+== Def Conjuntos $Sigma$-pr
+Un conjunto $Sigma$-mixto $S subset.eq omega^n times Sast^m$ se llama $Sigma$-recursivo primitivo si su función característica $chi^(omega^n times Sast^m)_S equiv lambda arrow(x) arrow(alpha) [ (arrow(x), arrow(alpha)) in S ]$ es $Sigma$-pr
+
+== Lema 15.
+Si $S_1, S_2 subset.eq omega^n times Sast^m$ son $Sigma$-pr, entonces también lo son:
+$S_1 union S_2$, $S_1 inter S_2$ y $S_1 - S_2$.
+
+
+== Lema 16.
+Sean $S_1, ..., S_n subset.eq omega$ y $L_1, ..., L_m subset.eq Sast$ conjuntos no vacíos.
+
+Entonces $S_1 times ... times S_n times L_1 times ... times L_m$ es $Sigma$-pr sii $S_1, ..., S_n, L_1, ..., L_m$ son $Sigma$-pr
+
+== Lema 17.
+Sea $f : "Dom"_f subset.eq omega^n times Sast^m -> O$ una función $Sigma$-pr.
+Si $S subset.eq "Dom"_f$ es $Sigma$-pr, entonces la función $f|_S$ también es $Sigma$-pr
+
+== Lema 18.
+Si $f : "Dom"_f subset.eq omega^n times Sast^m -> O$ es $Sigma$-pr, entonces existe una función $overline(f) : omega^n times Sast^m -> O$ $Sigma$-pr tal que $f = overline(f)|_"Dom"_f$.
+
+== Proposición 19.
+#Proposición19
+== Lema 20: Lema de division por casos para funciones $Sigma$-pr
+#Lema20
+
+== Lema 22.
+Sea Sigma un alfabeto finito.
+
+(a) SI  $f : omega times S_1 times ... times S_n times L_1 times ... times L_m -> omega$ es $Sigma$-pr, con $S_1, ..., S_n subset.eq omega$ y $L_1, ..., L_m subset.eq Sast$ no vacíos, entonces, las funciones $lambda x y arrow(x) arrow(alpha) . sum_(t=x)^y f(t, arrow(x), arrow(alpha))$  y $lambda x y arrow(x) arrow(alpha) . product_(t=x)^y f(t, arrow(x), arrow(alpha))$ son también $Sigma$-pr
+
+(b) Si $f : omega times S_1 times ... times S_n times L_1 times ... times L_m -> Sast$ es $Sigma$-pr, con $S_1, ..., S_n subset.eq omega$ y $L_1, ..., L_m subset.eq Sast$ no vacíos, entonces la función $lambda x y arrow(x) arrow(alpha) . subset_(t=x)^y f(t, arrow(x), arrow(alpha))$ es $Sigma$-pr
