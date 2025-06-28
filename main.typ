@@ -17,7 +17,7 @@
 Si no se especifica lo contrario, usaremos las siguientes convenciones:
 + $x, y, z, u, v, w, n, m, k, ... in omega$
 + $alpha, beta, gamma, delta, epsilon, psi, eta, ... in Sast$
-+ $O in {omega, Sast}$
++ $O, s in {(omega, hash), (Sast, ast)}$
 + "tq" es "tal que"
 + $Sigma$-pr es "$Sigma$-primitivo recursivo"
 + Sea $f : "Dom"_f -> {0, 1}$, entonces $f$ es un predicado.
@@ -582,10 +582,60 @@ es $Sigma$-pr.
 === Proposición: Caracterización básica de conjuntos $Sigma$-enumerables
 Sea $S subset.eq omega^n times Sast^m$ un conjunto no vacío. Entonces son equivalentes:
 + $S$ es $Sigma$-enumerable
-+ Hay un programa $P in "Pro"^Sigma$ tq:
-  + Para cada $x in omega$, $P$ se detiene partiendo desde el estado $⟦x⟧$ y llega a un estado de la forma $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$, donde $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$
-  + Para cada $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$ hay un $x in omega$ tq $P$ se detiene partiendo desde el estado $⟦x⟧$ y llega a un estado como en $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$
++ Hay un programa $PP in "Pro"^Sigma$ tq:
+  + Para cada $x in omega$, $PP$ se detiene partiendo desde el estado $||x||$ y llega a un estado de la forma $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$, donde $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$
+  + Para cada $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$ hay un $x in omega$ tq $PP$ se detiene partiendo desde el estado $||x||$ y llega a un estado como en $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$
 (Hacer el caso $n = 2$ y $m = 1$)
+
+
+Sea $n = 2$, $m = 1$ e $i = 1, 2, 3$.
+
+*Prueba $=>$:*
+
+Hipótesis: Dado $S subset.eq omega^2 times Sast^1$ no vacío y $Sigma$-enumerable.
+
+Por definición existe una función sobreyectiva $F : omega -> S$ tq $F_((i))$ son $Sigma$-computable.\
+Por "Proposición 4.8", existen macros para $F_((1))$, $F_((2))$ y $F_((3))$.\
+Sea $QQ$ el siguiente programa:
+
+$
+  &P 1 <- F_((3))(N 1)\
+  &N 2 <- F_((2))(N 1)\
+  &N 1 <- F_((1))(N 1)
+$
+
+donde:
+- Ninguna expansion usa las variables auxiliares $N 1, N 2, P 1$
+- Dos expansiones distintas no usan el mismo label auxiliar.
+
+Sea $PP$ el siguiente programa que extiende $QQ$:
+
+$
+  &QQ\
+  &P 2 <- epsilon\
+$
+
+$PP$ cumple las condiciones ya que emula el comportamiento de $F$ quien enumera a $S$.
+
+*Prueba $arrow.l.double$:*
+
+Hipótesis: Dado $PP in "Pro"^Sigma$ tq cumple las condiciones (a) y (b).
+
+Sean:
+- $PP_1 &= PP N 1 <- N 1$
+- $PP_2 &= PP N 1 <- N 2$
+- $PP_3 &= PP P 1 <- P 1$
+
+
+Tenemos:
+- $F_((1)) &= Psi^(1, 0, hash)_(PP_1)$
+- $F_((2)) &= Psi^(1, 0, hash)_(PP_2)$
+- $F_((3)) &= Psi^(1, 0, ast)_(PP_3)$
+
+Por definición, cada $F_((i))$ es $Sigma$-computable.\
+Por lo tanto $F = [F_((1)), F_((2)), F_((3))]$ es $Sigma$-computable.\
+Por hipótesis, dado que $F$ emula a $PP$, $"Dom"_F = omega$ y $"Im"_F = S$.\
+Por lo tanto $S$ es $Sigma$-enumerable.
 
 == Combo 3
 + *Teorema* (Gödel vence a Neumann): Si $f : D_f subset.eq omega^n times Sast^m -> Sast$ es $Sigma$-computable, entonces $f$ es $Sigma$-recursiva
@@ -675,9 +725,25 @@ Si $f : "Dom"_f subset.eq omega^n times Sast^m -> O$ es $Sigma$-pr, entonces exi
 == Lema 20: Lema de division por casos para funciones $Sigma$-pr
 #Lema20
 
-== Lema 22.
+== Lema 22. 
 Sea Sigma un alfabeto finito.
 
 (a) SI  $f : omega times S_1 times ... times S_n times L_1 times ... times L_m -> omega$ es $Sigma$-pr, con $S_1, ..., S_n subset.eq omega$ y $L_1, ..., L_m subset.eq Sast$ no vacíos, entonces, las funciones $lambda x y arrow(x) arrow(alpha) . sum_(t=x)^y f(t, arrow(x), arrow(alpha))$  y $lambda x y arrow(x) arrow(alpha) . product_(t=x)^y f(t, arrow(x), arrow(alpha))$ son también $Sigma$-pr
 
 (b) Si $f : omega times S_1 times ... times S_n times L_1 times ... times L_m -> Sast$ es $Sigma$-pr, con $S_1, ..., S_n subset.eq omega$ y $L_1, ..., L_m subset.eq Sast$ no vacíos, entonces la función $lambda x y arrow(x) arrow(alpha) . subset_(t=x)^y f(t, arrow(x), arrow(alpha))$ es $Sigma$-pr
+
+== Proposición 4.8
+
+Sea $f : "Dom"_f subset.eq omega^n times Sast^m -> omega$ una función $Sigma$-computable.
+Entonces, en $S^Sigma$ hay un macro de la forma: $V overline(n+1) <- f(V 1, ..., V overline(n), W 1, ..., W overline(m))$
+
+Sea $f : "Dom"_f subset.eq omega^n times Sast^m -> Sast$ una función $Sigma$-computable.
+Entonces, en $S^Sigma$ hay un macro de la forma: $W overline(n+1) <- f(V 1, ..., V overline(n), W 1, ..., W overline(m))$
+
+== Definición de función $Sigma$-computable
+Una función $Sigma$-mixta $f : S subset.eq omega^n times Sast^m -> O$ será llamada $Sigma$-computable si hay un programa $P$ tal que $f = Psi^(n, m, s)_(P)$.
+
+
+== Definición de conjuntos $Sigma$-enumerables
+
+Un conjunto $S subset.eq omega^n times Sast^m$ será llamado $Sigma$-enumerable cuando sea vacío o exista una función sobreyectiva $F : omega -> S in omega^n times Sast^m$ y $F(i)$ sea $Sigma$-computable para cada $i in {1, ..., n + m}$.
