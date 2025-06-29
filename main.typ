@@ -499,7 +499,7 @@ Probaremos por inducción en $k$ que $"Dom"_F$ es $Sigma$-pr, para cada $F in "P
   Por hipótesis inductiva, los conjuntos $"Dom"_g, "Dom"_g_i$ son $Sigma$-pr.\
   Por "Lema 15", $S = inter.big_(i=1)^(n + m) "Dom"_g_i$ es $Sigma$-pr.\
 
-  Por "Lema 20", $chi^(omega^k times Sast^l)_("Dom"_F)(arrow(x), arrow(alpha)) = cases(chi^(omega^n times Sast^m)_("Dom"_g) compose [g_1, ..., g_(n+m)] &"si" (arrow(x), arrow(alpha)) in S, C^(k,l)_0 &"si" (arrow(x), arrow(alpha)) in omega^k times Sast^l - S)$ es $Sigma$-pr.
+  Por "Lema 20" y "Lema 18", $chi^(omega^k times Sast^l)_("Dom"_F)(arrow(x), arrow(alpha)) = cases(chi^(omega^n times Sast^m)_("Dom"_g) compose [g_1, ..., g_(n+m)] &"si" (arrow(x), arrow(alpha)) in S, C^(k,l)_0 &"si" (arrow(x), arrow(alpha)) in omega^k times Sast^l - S)$ es $Sigma$-pr.
 
   Por lo tanto $"Dom"_F$ es $Sigma$-pr
 
@@ -579,77 +579,144 @@ $
 $
 es $Sigma$-pr.
 
-=== Proposición: Caracterización básica de conjuntos $Sigma$-enumerables
-Sea $S subset.eq omega^n times Sast^m$ un conjunto no vacío. Entonces son equivalentes:
-+ $S$ es $Sigma$-enumerable
-+ Hay un programa $PP in "Pro"^Sigma$ tq:
-  + Para cada $x in omega$, $PP$ se detiene partiendo desde el estado $||x||$ y llega a un estado de la forma $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$, donde $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$
-  + Para cada $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$ hay un $x in omega$ tq $PP$ se detiene partiendo desde el estado $||x||$ y llega a un estado como en $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$
-(Hacer el caso $n = 2$ y $m = 1$)
+#let ProposiciónCaracterizaciónbásicadeconjuntosSigmaenumerables = [
+  === Proposición: Caracterización básica de conjuntos $Sigma$-enumerables
+  Sea $S subset.eq omega^n times Sast^m$ un conjunto no vacío. Entonces son equivalentes:
+  + $S$ es $Sigma$-enumerable
+  + Hay un programa $PP in "Pro"^Sigma$ tq:
+    + Para cada $x in omega$, $PP$ se detiene partiendo desde el estado $||x||$ y llega a un estado de la forma $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$, donde $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$
+    + Para cada $(x_1, ..., x_n, alpha_1, ..., alpha_m) in S$ hay un $x in omega$ tq $PP$ se detiene partiendo desde el estado $||x||$ y llega a un estado como en $((x_1, ..., x_n, y_1, ...), (alpha_1, ..., alpha_m, beta_1, ...))$
+  (Hacer el caso $n = 2$ y $m = 1$)
 
 
-Sea $n = 2$, $m = 1$ e $i = 1, 2, 3$.
+  Sea $n = 2$, $m = 1$ e $i = 1, 2, 3$.
 
-*Prueba $=>$:*
+  *Prueba $=>$:*
 
-Hipótesis: Dado $S subset.eq omega^2 times Sast^1$ no vacío y $Sigma$-enumerable.
+  Hipótesis: Dado $S subset.eq omega^2 times Sast^1$ no vacío y $Sigma$-enumerable.
 
-Por definición existe una función sobreyectiva $F : omega -> S$ tq $F_((i))$ son $Sigma$-computable.\
-Por "Proposición 4.8", existen macros para $F_((1))$, $F_((2))$ y $F_((3))$.\
-Sea $QQ$ el siguiente programa:
+  Por definición existe una función sobreyectiva $F : omega -> S$ tq $F_((i))$ son $Sigma$-computable.\
+  Por "Proposición 4.8", existen macros para $F_((1))$, $F_((2))$ y $F_((3))$.\
+  Sea $QQ$ el siguiente programa:
+
+  $
+    & P 1 <- F_((3))(N 1) \
+    & N 2 <- F_((2))(N 1) \
+    & N 1 <- F_((1))(N 1)
+  $
+
+  donde:
+  - Ninguna expansion usa las variables auxiliares $N 1, N 2, P 1$
+  - Dos expansiones distintas no usan el mismo label auxiliar.
+
+  Sea $PP$ el siguiente programa que extiende $QQ$:
+
+  $
+    & QQ             \
+    & P 2 <- epsilon \
+  $
+
+  $PP$ cumple las condiciones ya que emula el comportamiento de $F$ quien enumera a $S$.
+
+  *Prueba $arrow.l.double$:*
+
+  Hipótesis: Dado $PP in "Pro"^Sigma$ tq cumple las condiciones (a) y (b).
+
+  Sean:
+  - $PP_1 &= PP N 1 <- N 1$
+  - $PP_2 &= PP N 1 <- N 2$
+  - $PP_3 &= PP P 1 <- P 1$
+
+
+  Tenemos:
+  - $F_((1)) &= Psi^(1, 0, hash)_(PP_1)$
+  - $F_((2)) &= Psi^(1, 0, hash)_(PP_2)$
+  - $F_((3)) &= Psi^(1, 0, ast)_(PP_3)$
+
+  Por definición, cada $F_((i))$ es $Sigma$-computable.\
+  Por lo tanto $F = [F_((1)), F_((2)), F_((3))]$ es $Sigma$-computable.\
+  Por hipótesis, dado que $F$ emula a $PP$, $"Dom"_F = omega$ y $"Im"_F = S$.\
+  Por lo tanto $S$ es $Sigma$-enumerable.
+]
+#ProposiciónCaracterizaciónbásicadeconjuntosSigmaenumerables
+== Combo 3
+=== Teorema: Gödel vence a Neumann
+Si $f : D_f subset.eq omega^n times Sast^m -> O$ es $Sigma$-computable, entonces $f$ es $Sigma$-recursiva
+(Hacer caso $O = Sast$)
+
+*Prueba:*
+
+Hipótesis: Sea $O = Sast$ y dado el programa $PP_0$ que computa a $f$.
 
 $
-  &P 1 <- F_((3))(N 1)\
-  &N 2 <- F_((2))(N 1)\
-  &N 1 <- F_((1))(N 1)
+  f = Phi^(n, m)_ast compose [p^(n,m)_1, ..., p^(n,m)_(n + m), C^(n, m)_PP_0]
 $
 
-donde:
-- Ninguna expansion usa las variables auxiliares $N 1, N 2, P 1$
-- Dos expansiones distintas no usan el mismo label auxiliar.
+donde $p^(n,m)_1, ..., p^(n,m)_(n + m)$ (respecto del alfabeto $Sigma union Sigma_p$) y $Phi^(n, m)_ast$ son $(Sigma union Sigma_p)$-recursivas.\
+Por lo tanto $f$ es $(Sigma union Sigma_p)$-recursiva.\
+Por "Teorema 4.2", $f$ es $Sigma$-recursiva.
 
-Sea $PP$ el siguiente programa que extiende $QQ$:
-
-$
-  &QQ\
-  &P 2 <- epsilon\
-$
-
-$PP$ cumple las condiciones ya que emula el comportamiento de $F$ quien enumera a $S$.
+=== Teorema: Caracterización de conjuntos $Sigma$-efectivamente computables
+Sea $S subset.eq omega^n times Sast^m$. Son equivalentes:
++ $S$ es $Sigma$-efectivamente computable
++ $S$ y $(omega^n times Sast^m) - S$ son $Sigma$-efectivamente enumerables
+(Hacer solo $arrow.l.double$)
 
 *Prueba $arrow.l.double$:*
 
-Hipótesis: Dado $PP in "Pro"^Sigma$ tq cumple las condiciones (a) y (b).
+Hipótesis: Dado que $S subset.eq omega^n times Sast^m$ y $S$ y $(omega^n times Sast^m) - S$ son $Sigma$-efectivamente enumerables.
 
-Sean:
-- $PP_1 &= PP N 1 <- N 1$
-- $PP_2 &= PP N 1 <- N 2$
-- $PP_3 &= PP P 1 <- P 1$
+Si $S = emptyset$ o $S = omega^n times Sast^m$, entonces es claro que $S$ es $Sigma$-efectivamente computable.\
 
+Supongamos que $S$ no es vacío ni $Sigma$-total.\
+Por definición, existen procedimientos efectivos $PP_1$ y $PP_2$ que enumeran a $S$ y $(omega^n times Sast^m) - S$.\
+El siguiente procedimiento efectivo computa a $chi^(omega^n times Sast^m)_S$:\
 
-Tenemos:
-- $F_((1)) &= Psi^(1, 0, hash)_(PP_1)$
-- $F_((2)) &= Psi^(1, 0, hash)_(PP_2)$
-- $F_((3)) &= Psi^(1, 0, ast)_(PP_3)$
+$
+       & "Dada la entrada" (arrow(x), arrow(alpha)) in omega^n times Sast^m                           \
+  E 1: & "Asignar a" T "el valor" 0                                                                   \
+  E 2: & "  Realizar" PP_1 "con entrada" T "obteniendo" (arrow(y), arrow(beta))                       \
+  E 3: & "  Realizar" PP_2 "con entrada" T "obteniendo" (arrow(z), arrow(gamma))                      \
+  E 4: & "  Si" (arrow(x), arrow(alpha)) = (arrow(y), arrow(beta)) "entonces detenerse y devolver" 1  \
+  E 5: & "  Si" (arrow(x), arrow(alpha)) = (arrow(z), arrow(gamma)) "entonces detenerse y devolver" 0 \
+  E 6: & "  Asignar a" T "el valor" T + 1                                                             \
+  E 7: & "  Saltar a" E 2
+$
 
-Por definición, cada $F_((i))$ es $Sigma$-computable.\
-Por lo tanto $F = [F_((1)), F_((2)), F_((3))]$ es $Sigma$-computable.\
-Por hipótesis, dado que $F$ emula a $PP$, $"Dom"_F = omega$ y $"Im"_F = S$.\
-Por lo tanto $S$ es $Sigma$-enumerable.
-
-== Combo 3
-+ *Teorema* (Gödel vence a Neumann): Si $f : D_f subset.eq omega^n times Sast^m -> Sast$ es $Sigma$-computable, entonces $f$ es $Sigma$-recursiva
-
-+ *Teorema* (Caracterización de conjuntos $Sigma$-efectivamente computables): Sea $S subset.eq omega^n times Sast^m$. Son equivalentes:
-(a) $S$ es $Sigma$-efectivamente computable
-(b) $S$ y $(omega^n times Sast^m) - S$ son $Sigma$-efectivamente enumerables
-(Hacer solo $(b) -> (a)$)
+Por lo tanto, $S$ es $Sigma$-efectivamente computable.
 
 == Combo 4
-+ *Proposición* (Caracterización básica de conjuntos $Sigma$-enumerables): (igual a Combo 2, hacer caso $n = 2$, $m = 1$)
+#ProposiciónCaracterizaciónbásicadeconjuntosSigmaenumerables
 
-+ *Lema* (Lema de la sumatoria): Sea $Sigma$ un alfabeto finito. Si $f : omega times S_1 times ... times S_n times L_1 times ... times L_m -> omega$ es $Sigma$-pr, con $S_i subset.eq omega$ y $L_j subset.eq Sast$ no vacíos, entonces
-$lambda x y arrow(x) arrow(alpha). sum_t=x^y f(t, arrow(x), arrow(alpha))$ es $Sigma$-pr
+=== Lema: Lema de la sumatoria
+Sea $Sigma$ un alfabeto finito. Si $f : omega times S_1 times ... times S_n times L_1 times ... times L_m -> omega$ es $Sigma$-pr, con $S_1, ..., S_n subset.eq omega$ y $L_1, ..., L_m subset.eq Sast$ no vacíos, entonces, la función $lambda x y arrow(x) arrow(alpha)[sum_(i=x)^y f(i, arrow(x), arrow(alpha))]$ es también $Sigma$-pr.
+
+*Prueba:*
+
+$
+  lambda x y arrow(x) arrow(alpha) [sum_(i=x)^y f(i, arrow(x), arrow(alpha))] &= lambda y x arrow(x) arrow(alpha) [sum_(t=0)^(y) h(t, x, arrow(x), arrow(alpha))] compose [p^(2+n,m)_2, p^(2+n,m)_1, p^(2+n,m)_(3)...,p^(2+n,m)_(2+n+m)]\
+  &= R(h,g) compose [p^(2+n,m)_2, p^(2+n,m)_1, p^(2+n,m)_(3)...,p^(2+n,m)_(2+n+m)]
+$
+
+Donde:
+
+$
+  h : omega times S_1 times ... times S_n times L_1 times ... times L_m &-> omega\
+  (x, arrow(x), arrow(alpha)) &-> cases(0 &"si" (x, arrow(x), arrow(alpha)) in H_1, f(0, arrow(x), arrow(alpha)) &"si" (x, arrow(x), arrow(alpha)) in H_2)\
+  g : omega^3 times S_1 times ... times S_n times L_1 times ... times L_m &-> omega\
+  (A, t, x, arrow(x), arrow(alpha)) &-> cases(0 &"si" (A, t, x, arrow(x), arrow(alpha)) in G_1, A + f(t + 1, arrow(x), arrow(alpha)) &"si" (A, t, x, arrow(x), arrow(alpha)) in G_2)
+$
+
+Donde:
+
+$
+  H_1 &= {(x, arrow(x), arrow(alpha)) in "Dom"_h : x > 0}\
+  H_2 &= {(x, arrow(x), arrow(alpha)) in "Dom"_h : x = 0}\
+  G_1 &= {(A, t, x, arrow(x), arrow(alpha)) in "Dom"_g : x > t + 1}\
+  G_2 &= {(A, t, x, arrow(x), arrow(alpha)) in "Dom"_g : x ≤ t + 1}\
+$
+
+Por "Lema 20" y "Lema 18", $h$ y $g$ son $Sigma$-pr.\
 
 == Combo 5
 + *Lema*: Sea $Sigma = @, %, !$ y $f : S_1 times S_2 times L_1 times L_2 -> omega$, con $S_1, S_2 subset.eq omega$ y $L_1, L_2 subset.eq Sast$ no vacíos. Sea $rho.alt$ una familia $Sigma$-indexada de funciones $rho.alt_a : omega times S_1 times S_2 times L_1 times L_2 times Sast -> omega$ para cada $a in Sigma$.
@@ -725,10 +792,10 @@ Si $f : "Dom"_f subset.eq omega^n times Sast^m -> O$ es $Sigma$-pr, entonces exi
 == Lema 20: Lema de division por casos para funciones $Sigma$-pr
 #Lema20
 
-== Lema 22. 
+== Lema 22.
 Sea Sigma un alfabeto finito.
 
-(a) SI  $f : omega times S_1 times ... times S_n times L_1 times ... times L_m -> omega$ es $Sigma$-pr, con $S_1, ..., S_n subset.eq omega$ y $L_1, ..., L_m subset.eq Sast$ no vacíos, entonces, las funciones $lambda x y arrow(x) arrow(alpha) . sum_(t=x)^y f(t, arrow(x), arrow(alpha))$  y $lambda x y arrow(x) arrow(alpha) . product_(t=x)^y f(t, arrow(x), arrow(alpha))$ son también $Sigma$-pr
+(a) Si  $f : omega times S_1 times ... times S_n times L_1 times ... times L_m -> omega$ es $Sigma$-pr, con $S_1, ..., S_n subset.eq omega$ y $L_1, ..., L_m subset.eq Sast$ no vacíos, entonces, las funciones $lambda x y arrow(x) arrow(alpha) . sum_(t=x)^y f(t, arrow(x), arrow(alpha))$  y $lambda x y arrow(x) arrow(alpha) . product_(t=x)^y f(t, arrow(x), arrow(alpha))$ son también $Sigma$-pr
 
 (b) Si $f : omega times S_1 times ... times S_n times L_1 times ... times L_m -> Sast$ es $Sigma$-pr, con $S_1, ..., S_n subset.eq omega$ y $L_1, ..., L_m subset.eq Sast$ no vacíos, entonces la función $lambda x y arrow(x) arrow(alpha) . subset_(t=x)^y f(t, arrow(x), arrow(alpha))$ es $Sigma$-pr
 
@@ -747,3 +814,11 @@ Una función $Sigma$-mixta $f : S subset.eq omega^n times Sast^m -> O$ será lla
 == Definición de conjuntos $Sigma$-enumerables
 
 Un conjunto $S subset.eq omega^n times Sast^m$ será llamado $Sigma$-enumerable cuando sea vacío o exista una función sobreyectiva $F : omega -> S in omega^n times Sast^m$ y $F(i)$ sea $Sigma$-computable para cada $i in {1, ..., n + m}$.
+
+== Teorema 4.2 (Independencia del alfabeto)
+
+Sean $Sigma$ y $Gamma$ alfabetos cualesquiera:
+
++ (a) Supongamos que una función $f$ es $Sigma$-mixta y $Gamma$-mixta. Entonces $f$ es $Sigma$-recursiva (resp. $Sigma$-pr) sii $f$ es $Gamma$-recursiva (resp. $Gamma$-pr).
+
++ (b) Supongamos que un conjunto $S$ es $Sigma$-mixto y $Gamma$-mixto. Entonces $S$ es $Sigma$-recursivo (resp. $Sigma$-re, $Sigma$-pr) sii $S$ es $Gamma$-recursivo (resp. $Gamma$-re, $Gamma$-pr).
