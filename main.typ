@@ -710,21 +710,59 @@ $
 Donde:
 
 $
-  H_1 &= {(x, arrow(x), arrow(alpha)) in "Dom"_h : x > 0}\
-  H_2 &= {(x, arrow(x), arrow(alpha)) in "Dom"_h : x = 0}\
-  G_1 &= {(A, t, x, arrow(x), arrow(alpha)) in "Dom"_g : x > t + 1}\
-  G_2 &= {(A, t, x, arrow(x), arrow(alpha)) in "Dom"_g : x ≤ t + 1}\
+  H_1 & = {(x, arrow(x), arrow(alpha)) in "Dom"_h : x > 0}           \
+  H_2 & = {(x, arrow(x), arrow(alpha)) in "Dom"_h : x = 0}           \
+  G_1 & = {(A, t, x, arrow(x), arrow(alpha)) in "Dom"_g : x > t + 1} \
+  G_2 & = {(A, t, x, arrow(x), arrow(alpha)) in "Dom"_g : x ≤ t + 1} \
 $
 
 Por "Lema 20" y "Lema 18", $h$ y $g$ son $Sigma$-pr.\
 
 == Combo 5
-+ *Lema*: Sea $Sigma = @, %, !$ y $f : S_1 times S_2 times L_1 times L_2 -> omega$, con $S_1, S_2 subset.eq omega$ y $L_1, L_2 subset.eq Sast$ no vacíos. Sea $rho.alt$ una familia $Sigma$-indexada de funciones $rho.alt_a : omega times S_1 times S_2 times L_1 times L_2 times Sast -> omega$ para cada $a in Sigma$.
-Si $f$ y cada $rho.alt_a$ son $Sigma$-efectivamente computables, entonces $R(f, rho.alt)$ lo es.
-(Ejercicio de la Guía 5)
+=== Lema, Ejercicio de la Guía 5
+Sean $Sigma = {@, %, !}$ y $S_1, S_2 subset.eq omega$ y $L_1, L_2 subset.eq Sast$ no vacíos.\
+Sea $f : S_1 times S_2 times L_1 times L_2 -> omega$ y $rho.alt$ una familia $Sigma$-indexada de funciones $rho.alt_a : omega times S_1 times S_2 times L_1 times L_2 times Sast -> omega$ para cada $a in Sigma$.\
+Si $f$ y cada $rho.alt_a$ son $Sigma$-efectivamente computables, entonces $R(f, rho.alt) : S_1 times S_2 times L_1 times L_2 times Sast -> omega$ lo es.
 
-+ *Lema* (Lema de cuantificación acotada): Sea $p : S times S_1 times ... times S_n times L_1 times ... times L_m -> omega$ un predicado $Sigma$-pr, y $dash(S) subset.eq S$ un conjunto $Sigma$-pr Entonces
-$lambda x arrow(x) arrow(alpha)[ (forall t in dash(S))_(t <= x) P(t, arrow(x), arrow(alpha))]$ es $Sigma$-pr
+*Prueba:*
+
+Por definición, existen procedimientos efectivos $PP_f$, $PP_rho.alt_@$, $PP_rho.alt_%$ y $PP_rho.alt_!$. \
+
+El siguiente procedimiento efectivo computa a $R(f, rho.alt)$:
+
+$
+  &"Dada la entrada" (x, y, alpha, beta, gamma) in S_1 times S_2 times L_1 times L_2 times Sast \
+  E 1: &"Asignar a" tau "el valor" epsilon \
+  E 2: &"Asignar a" A "el resultado de correr" PP_f "con entrada" (x, y, alpha, beta)\
+  E 3: &"  Si" gamma = epsilon "detenerse y devolver" A\
+  E 4: &"  Si" [gamma]_1 = @, "Asignar a" A "el resultado de correr" PP_rho.alt_@ "con entrada" (A, x, y, alpha, beta, tau)\
+  E 5: &"  Si" [gamma]_1 = %, "Asignar a" A "el resultado de correr" PP_rho.alt_% "con entrada" (A, x, y, alpha, beta, tau)\
+  E 6: &"  Si" [gamma]_1 = !, "Asignar a" A "el resultado de correr" PP_rho.alt_! "con entrada" (A, x, y, alpha, beta, tau)\
+  E 7: &"  Asignar a" tau "el resultado de correr" tau.[gamma]_1\
+  E 8: &"  Asignar a" gamma "el resultado de correr" arrow.cw.half gamma\
+  E 9: &"  Saltar a" E 3
+$
+
+=== Lema: Lema de cuantificación acotada
+Sean $P : S times S_1 times ... times S_n times L_1 times ... times L_m -> {0, 1}$ y $overline(S) subset.eq S$ $Sigma$-pr.\
+Entonces $lambda x arrow(x) arrow(alpha)[ (forall t in overline(S))_(t <= x) P(t, arrow(x), arrow(alpha))]$ es $Sigma$-pr
+
+*Prueba:*
+
+Sea:
+$
+  Q : omega times S_1 times ... times S_n times L_1 times ... times L_m &-> {0, 1}\
+  (t, arrow(x), arrow(alpha)) &-> cases(P(t, arrow(x), arrow(alpha)) &"si" (t, arrow(x), arrow(alpha)) in overline(S), 1 &"si" (t, arrow(x), arrow(alpha)) in omega - overline(S))
+$
+
+Por "Lema 20" y "Lema 18", $Q$ es $Sigma$-pr.\
+
+$
+  lambda x arrow(x) arrow(alpha)[ (forall t in overline(S))_(t <= x) P(t, arrow(x), arrow(alpha))] &= lambda x arrow(x) arrow(alpha)[product^x_(t=0) Q(t, arrow(x), arrow(alpha))]\
+  &= lambda z x arrow(x) arrow(alpha)[product^x_(t=z) Q(t, arrow(x), arrow(alpha))] compose [C^(1 + n, m)_0, p^(1 + n,m)_1, ..., p^(1 + n,m)_(1 + n + m)]
+$
+
+Por "Lema 22", es $Sigma$-pr.
 
 == Combo 6
 + *Lema*: Si $S subset.eq omega^n times Sast^m$ es $Sigma$-efectivamente computable, entonces $S$ es $Sigma$-efectivamente enumerable
