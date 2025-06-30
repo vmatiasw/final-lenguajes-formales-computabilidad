@@ -765,13 +765,79 @@ $
 Por "Lema 22", es $Sigma$-pr.
 
 == Combo 6
-+ *Lema*: Si $S subset.eq omega^n times Sast^m$ es $Sigma$-efectivamente computable, entonces $S$ es $Sigma$-efectivamente enumerable
+=== Lema:
+Si $S subset.eq omega^n times Sast^m$ es $Sigma$-efectivamente computable, entonces $S$ es $Sigma$-efectivamente enumerable
 
-+ *Teorema* (Caracterización de conjuntos $Sigma$-r.e.): Sea $S subset.eq omega^n times Sast^m$. Son equivalentes:
-(1) $S$ es $Sigma$-recursivamente enumerable
-(2) $S = "IF"$, para alguna $F : D_F subset.eq omega^k times Sast^l -> omega^n times Sast^m$ tq cada $F(i)$ es $Sigma$-recursiva
-(3) $S = D_f$, para alguna función $Sigma$-recursiva $f$
+*Prueba:*
+
+Si $S = emptyset$, por definición $S$ es $Sigma$-efectivamente enumerable.\
+Supongamos que $S$ no es vacío.\
+Por definición existe un procedimiento efectivo  que computa a $chi^(omega^n times Sast^m)_S$.\
+El siguiente procedimiento efectivo enumera a $S$:
+
+$
+       & "Dada la entrada" x in omega                                                                                     \
+  E 1: & "Asignar a" arrow(x) "los resultados de correr" ((x))_1,...,((x))_n                                              \
+  E 2: & "Asignar a" arrow(alpha) "los resultados de correr" ast^<= ((x))_1,..., ast^<= ((x))_n                           \
+  E 3: & "Si" chi^(omega^n times Sast^m)_S (arrow(x), arrow(alpha)) = 1 "detenerse y devolver" (arrow(x), arrow(alpha))   \
+  E 4: & "Asignar a" x "el valor" 0                                                                                       \
+  E 5: & "  Asignar a" arrow(x) "los resultados de correr" ((x))_1,...,((x))_n                                            \
+  E 6: & "  Asignar a" arrow(alpha) "los resultados de correr" ast^<= ((x))_1,..., ast^<= ((x))_n                         \
+  E 7: & "  Si" chi^(omega^n times Sast^m)_S (arrow(x), arrow(alpha)) = 1 "detenerse y devolver" (arrow(x), arrow(alpha)) \
+  E 8: & "  Asignar a" x "el resultado de correr" x + 1                                                                   \
+  E 9: & "  Saltar a" E 5
+$
+
+Cada elemento en $S$ es equivalente a un posible estado de $(arrow(x), arrow(alpha))$ que tarde o temprano sera alcanzado.\
+Ademas, dado que $S != emptyset$, el procedimiento efectivo siempre se detiene y devuelve un elemento de $S$.
+Por lo tanto, $S$ es $Sigma$-efectivamente enumerable.
+
+=== Teorema: Caracterización de conjuntos $Sigma$-r.e.
+Sea $S subset.eq omega^n times Sast^m$. Son equivalentes:
++ $S$ es $Sigma$-recursivamente enumerable
++ $S = "Im"_F$, para alguna $F : "Dom"_F subset.eq omega^k times Sast^l -> omega^n times Sast^m$ tq cada $F(i)$ es $Sigma$-recursiva
++ $S = "Dom"_f$, para alguna función $Sigma$-recursiva $f$
 (Hacer la prueba de $(2) -> (3)$, con $k = l = 1$ y $n = m = 2$)
+
+*Prueba $=>$:*
+
+Hipótesis: Dado $F : "Dom"_F subset.eq omega times Sast -> S subset.eq omega^2 times Sast^2$ sobreyectiva tq cada $F(i)$ es $Sigma$-recursiva.
+
+Por teorema, existen programas $PP_i$ que computan $F_((i))$.\
+Sea $<=$ un orden total sobre $Sigma$.\
+
+Sea $"NotHalt"_PP_i = lambda t x alpha [ not "Halt"^(1,1)(t, x, alpha, PP_i) ]$\
+Notar que, al abstraer $PP$, su dominio esta bajo $Sigma$, por lo que la función es $Sigma$-mixta.\
+Por definición, $"Halt"^(1,1)$ es $(Sigma union Sigma_p)$-pr por lo que $"NotHalt"_PP_i$ también.\
+Por "Teorema 4.2", $"NotHalt"_PP_i$ es $Sigma$-pr, por lo que es $Sigma$-computable y existe su macro.\
+
+Definimos:
+- $"NeqE"_(PP_i hash) = lambda z t x alpha [ y != E^(1,1)_(hash 1)(t, x, alpha, P_i)]$ para i = 1, 2
+- $"NeqE"_(PP_i ast) = lambda x t alpha beta [ beta != E^(1,1)_(ast 1)(t, x, alpha, P_i)]$ para i = 3, 4
+Notar que, al abstraer $PP$, sus dominios están bajo $Sigma$, por lo que las funciones son $Sigma$-mixtas.\
+Por definición, $E^(1,1)_s$ son $(Sigma union Sigma_p)$-pr por lo que $"NeqE"_(PP_i s)$ también.\
+Por "Teorema 4.2", $"NeqE"_(PP_i s)$ son $Sigma$-pr, por lo que son $Sigma$-computable y existen sus macros.\
+
+Luego, para algún $j in NN$, $lambda x [(x)_j]$ y $lambda x [*^<= (x)_j]$ son $Sigma$-pr, por lo que son $Sigma$-computable y existen sus macros.\
+
+$p^(2,2)_1|_S$ es una función tq $"Dom"_(p^(2,2)_1)|_S = S$. Demos un programa que la compute:
+
+$
+  L 1: & N 5 <- N 5 + 1                                         \
+       & N 4 <- (N 5)_1                                         \
+       & N 3 <- (N 5)_2                                         \
+       & P 3 <- ast^(<=)((N 5)_3)                               \
+       & ["IF" "NotHalt"_PP_1 (N 4, N 3, P 3) "GOTO" L 1]       \
+       & ["IF" "NotHalt"_PP_2 (N 4, N 3, P 3) "GOTO" L 1]       \
+       & ["IF" "NotHalt"_PP_3 (N 4, N 3, P 3) "GOTO" L 1]       \
+       & ["IF" "NotHalt"_PP_4 (N 4, N 3, P 3) "GOTO" L 1]       \
+       & ["IF" "NeqE"_(PP_1 hash) (N 1, N 4, N 3, P 3) "GOTO" L 1] \
+       & ["IF" "NeqE"_(PP_2 hash) (N 2, N 4, N 3, P 3) "GOTO" L 1] \
+       & ["IF" "NeqE"_(PP_3 ast) (P 1, N 4, N 3, P 3) "GOTO" L 1]  \
+       & ["IF" "NeqE"_(PP_4 ast) (P 2, N 4, N 3, P 3) "GOTO" L 1]
+$
+
+Por lo tanto, $p^(2,2)_1|_S$ es $Sigma$-computable y $Sigma$-recursiva.\
 
 == Combo 7
 + *Lema* (Lema de minimización acotada): Sean $n, m >= 0$. Sea $p : D_nu subset.eq omega times omega^n times Sast^m -> omega$ un predicado $Sigma$-pr
