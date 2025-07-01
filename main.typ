@@ -93,10 +93,10 @@ Dados $x, i in NN$, usaremos $(x)_i$ para denotar a $s_i$ de $(s_1, s_2, ...) = 
 Se le suele llamar la "i-esima bajada de x" al numero $(x)_i$ (al "bajar" el i-esimo exponente de la única posible factorización de $x$ como producto de primos).
 
 == Combo 3: Defina:
-=== Cuando un conjunto $S subset.eq omega^n times Sast^m$ es llamado $Sigma$-rmente enumerable
+=== Cuando un conjunto $S subset.eq omega^n times Sast^m$ es llamado $Sigma$-re
 (no hace falta que defina "función $Sigma$-r")
 
-Diremos que un conjunto $S subset.eq omega^n times Sast^m$ sera llamado $Sigma$-rmente enumerable cuando sea vacío o haya una función sobreyectiva $F : omega -> S$ tq $F_((i)) = p^(n,m)_i compose F$ sea $Sigma$-r para cada $i in {1,...,n+m}$.
+Diremos que un conjunto $S subset.eq omega^n times Sast^m$ sera llamado $Sigma$-re cuando sea vacío o haya una función sobreyectiva $F : omega -> S$ tq $F_((i)) = p^(n,m)_i compose F$ sea $Sigma$-r para cada $i in {1,...,n+m}$.
 
 === $s^<=$
 
@@ -792,9 +792,9 @@ Cada elemento en $S$ es equivalente a un posible estado de $(arrow(x), arrow(alp
 Ademas, dado que $S != emptyset$, el procedimiento efectivo siempre se detiene y devuelve un elemento de $S$.
 Por lo tanto, $S$ es $Sigma$-efectivamente enumerable.
 
-=== Teorema: Caracterización de conjuntos $Sigma$-re
+=== Teorema 4.12: Caracterización de conjuntos $Sigma$-re
 Sea $S subset.eq omega^n times Sast^m$. Son equivalentes:
-+ $S$ es $Sigma$-rmente enumerable
++ $S$ es $Sigma$-re
 + $S = "Im"_F$, para alguna $F : "Dom"_F subset.eq omega^k times Sast^l -> omega^n times Sast^m$ tq cada $F(i)$ es $Sigma$-r
 + $S = "Dom"_f$, para alguna función $Sigma$-r $f$
 (Hacer la prueba de $(2) -> (3)$, con $k = l = 1$ y $n = m = 2$)
@@ -840,12 +840,15 @@ $
 Por lo tanto, $p^(2,2)_1|_S$ es $Sigma$-computable y $Sigma$-r.\
 
 == Combo 7
-=== Lema: Lema de minimización acotada
+=== Lema 4.25: Lema de minimización acotada
 
-Sea $P : "Dom"_P subset.eq omega times omega^n times Sast^m -> {0, 1}$ $Sigma$-pr, entonces:
-+ $M(P)$ es $Sigma$-r
-+ Si existe $f : omega^n times Sast^m -> omega$ $Sigma$-pr tq $M(P)(arrow(x), arrow(alpha)) = min_t P(t, arrow(x), arrow(alpha)) <= f(arrow(x), arrow(alpha))$, entonces $M(P)$ es $Sigma$-pr
+#let lemaminimizacionacotadanumerica = [
+  Sea $P : "Dom"_P subset.eq omega times omega^n times Sast^m -> {0, 1}$ $Sigma$-pr, entonces:
+  + $M(P)$ es $Sigma$-r
+  + Si existe $f : omega^n times Sast^m -> omega$ $Sigma$-pr tq $M(P)(arrow(x), arrow(alpha)) = min_t P(t, arrow(x), arrow(alpha)) <= f(arrow(x), arrow(alpha))$, entonces $M(P)$ es $Sigma$-pr
 
+]
+#lemaminimizacionacotadanumerica
 *Prueba 1:*
 
 Hipótesis: Dado $P : "Dom"_P subset.eq omega times omega^n times Sast^m -> {0, 1}$ $Sigma$-pr.
@@ -901,30 +904,89 @@ Entonces, por definición, existen programas que computan a $f$, $F_((1))$ y $F_
 
 El siguiente programa computa a $f|_S$:
 $
-  L 2: &["IF" N 1 != F_((1)) (N 3) "GOTO" L 1]\
-  &["IF" P 1 = F_((2)) (N 3) "GOTO" L 3]\
-  L 1: &N 3 <- N 3 + 1\
-  &"GOTO" L 2\
-  L 3: &[P 1 <- f(N 1, P 1)]\
-  &"SKIP"
+  L 2: & ["IF" N 1 != F_((1)) (N 3) "GOTO" L 1] \
+       & ["IF" P 1 = F_((2)) (N 3) "GOTO" L 3]  \
+  L 1: & N 3 <- N 3 + 1                         \
+       & "GOTO" L 2                             \
+  L 3: & [P 1 <- f(N 1, P 1)]                   \
+       & "SKIP"
 $
 
 == Combo 8
-+ *Lema*: Si $Sigma supset.eq Sigma_p$, entonces $"AutoHalt"^Sigma$ no es $Sigma$-recursivo
+=== Lema 4.62
+Si $Sigma supset.eq Sigma_p$, entonces $"AutoHalt"^Sigma$ no es $Sigma$-recursivo
 
-+ *Teorema*: Si $Sigma supset.eq Sigma_p$, entonces $"AutoHalt"^Sigma$ no es $Sigma$-efectivamente computable
+*Prueba:*
 
-+ *Lema*: Sea $A = p in "Pro"^Sigma : "AutoHalt"^Sigma(P) = 1$, entonces $A$ es $Sigma$-re y no $Sigma$-recursivo
-Además, el conjunto $N = p in "Pro"^Sigma : "AutoHalt"^Sigma(P) = 0$ no es $Sigma$-re
+Supongamos que $"AutoHalt"^Sigma$ es $Sigma$-recursivo tq existe su macro.\
+Sea el siguiente programa $PP$:
+$
+  L 1: ["IF" "AutoHalt"^Sigma (P 1) "GOTO" L L]\
+$
+Este programa termina partiendo de $||PP||$ sii $"AutoHalt"^Sigma (PP) = 0$. Lo cual es un absurdo por definición de $"AutoHalt"^Sigma$.
 
-+ *Teorema* (Neumann vence a Gödel): Si $h$ es $Sigma$-r, entonces $h$ es $Sigma$-computable
+=== Teorema 4.15.
+Si $Sigma supset.eq Sigma_p$, entonces $"AutoHalt"^Sigma$ no es $Sigma$-efectivamente computable
+
+*Prueba:*
+
+Si $"AutoHalt"^Sigma$ fuera $Sigma$-efectivamente computable, la Tesis de Church nos diría que es $Sigma$-recursivo, contradiciendo el lema anterior.
+
+=== Lema 4.63.
+Si $Sigma supset.eq Sigma_p$. Sea $A = {PP in "Pro"^Sigma : "AutoHalt"^Sigma (P) = 1}$, entonces $A$ es $Sigma$-re y no $Sigma$-r.\
+Además, el conjunto $N = {PP in "Pro"^Sigma : "AutoHalt"^Sigma (P) = 0}$ no es $Sigma$-re.
+
+*Prueba:*
+
+Sea $P = lambda t P ["Halt"^(0,1) (t, P, P)]$.\
+Como $P$ es $Sigma$-pr, por "Lema 4.25" $M (P)$ es $Sigma$-r.\
+Como $"Dom"_(M (P)) = A$, por "Teorema 4.12" $A$ es $Sigma$-re.
+
+Supongamos que $N$ es $Sigma$-re.\
+Por "Lema 4.35" y "Lema 4.34",
+$
+  "AutoHalt"^Sigma : "Pro"^Sigma & -> {0, 1}                                \
+                               P & -> cases(1 &"si" P in A, 0 &"si" P in N)
+$
+es $Sigma$-r, lo que contradice el "Lema 4.62".
+
+Finalmente supongamos $A$ es $Sigma$-r. Entonces el conjunto $N = (Sast - A) inter "Pro"^Sigma$
+deberia serlo, lo cual es absurdo.
+
+=== Teorema: Neumann vence a Gödel
+Si $h$ es $Sigma$-r, entonces $h$ es $Sigma$-computable
 (Hacer solo el caso $h = M(P)$)
 
+*Prueba:*
+
+Probaremos por induccion en k:
++ Caso $k = 0$:
+  $"R"^Sigma_0 = "PR"^Sigma_0 = {"suc", "pred", C^(0,0)_0, C^(0,0)_epsilon} union {d_a : a in Sigma} union {p^(n,m)_j : 1 <= j <= n + m}$
+  - suc: $N 1 <- N 1 + 1$
+  - pred: $L 1 : "IF" N 1 = 0 "GOTO" L 1$ $N 1 <- N 1 - 1$
+  - $C^(0,0)_0$ y $C^(0,0)_epsilon$: SKIP
+  - $d_a$: $P 1 <- P 1 . a$
+  - $p^(n,m)_j$: $N j <- N j$ para $j = 1, ..., n$
+  - $p^(n,m)_j$: $P j <- P j$ para $j = n + 1, ..., m$
++ Supongamos: Si $h in R^Sigma_k$, entonces h es $Sigma$-computable.
++ Veamos para el caso $h = M (P)$ con $P : omega times omega^n times Sast^m -> {0,1}$ tq $P in R^Sigma_k$ si se cumple: Si $h in R^Sigma_(k+1)$, entonces h es $Sigma$-computable.\
+  Sea $h = M (P) in R^Sigma_(k+1)$.\
+  Por hipótesis inductiva, $P$ es $Sigma$-computable por lo que tenemos su macro.\
+  El siguiente programa computa a $h$:
+$
+  L 2: &"IF" P (N overline(n + 1), N 1, ..., N overline(n), P 1, ..., P overline(m)) "GOTO" L 1\
+  &N overline(n) + 1 <- N overline(n + 1) + 1\
+  &"GOTO" L 2\
+  L 1: &N 1 ← N overline(n + 1)\
+$
+
 == Combo 9
-+ *Lema* (Lema de división por casos para funciones $Sigma$-rs): Supongamos $f_i : "Dom"_f_i subset.eq omega^n times Sast^m -> O$ para $i = 1, ..., k$, tales que $"Dom"_f_i arrow.r.double "Dom"_f_j = emptyset$ para $i != j$. Entonces $f_1 tack.r.double ... tack.r.double f_k$ es $Sigma$-r
+=== Lema: Lema de división por casos para funciones $Sigma$-rs)
+Supongamos $f_i : "Dom"_f_i subset.eq omega^n times Sast^m -> O$ para $i = 1, ..., k$, tales que $"Dom"_f_i arrow.r.double "Dom"_f_j = emptyset$ para $i != j$. Entonces $f_1 tack.r.double ... tack.r.double f_k$ es $Sigma$-r
 (Hacer el caso $k = 2$, $n = m = 1$ y $O = omega$)
 
-+ *Teorema* (Gödel vence a Neumann): Si $f : "Dom"_f subset.eq omega^n times Sast^m -> omega$ es $Sigma$-computable, entonces $f$ es $Sigma$-r
+=== Teorema: Gödel vence a Neumann
+Si $f : "Dom"_f subset.eq omega^n times Sast^m -> omega$ es $Sigma$-computable, entonces $f$ es $Sigma$-r
 
 = Utilidades
 
@@ -1011,3 +1073,6 @@ Sea $Sigma$ un alfabeto finito.
 
 Sean $P: S subset omega^n times Sast^m -> omega$ y $Q: S subset.eq omega^n times Sast^m -> omega$ predicados $Sigma$-recursivos.\
 Entonces también lo son: $(P or Q)$, $(P and Q)$ y $not P$
+
+=== Lema 4.25: Lema de minimización acotada
+#lemaminimizacionacotadanumerica
