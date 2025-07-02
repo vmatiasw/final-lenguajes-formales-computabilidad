@@ -9,6 +9,8 @@
   it,
 )
 
+TODO: ordenar los lemas comunes y sus citaciones. agregar los de los manantiales.
+
 // Definición de símbolos
 #let Sast = $Sigma^ast$
 
@@ -609,14 +611,7 @@ es $Sigma$-pr.
   - Ninguna expansion usa las variables auxiliares $N 1, N 2, P 1$
   - Dos expansiones distintas no usan el mismo label auxiliar.
 
-  Sea $PP$ el siguiente programa que extiende $QQ$:
-
-  $
-    & QQ             \
-    & P 2 <- epsilon \
-  $
-
-  $PP$ cumple las condiciones ya que emula el comportamiento de $F$ quien enumera a $S$.
+  $QQ$ cumple las condiciones ya que emula el comportamiento de $F$ quien enumera a $S$.
 
   *Prueba $arrow.l.double$:*
 
@@ -974,19 +969,51 @@ Probaremos por induccion en k:
   Por hipótesis inductiva, $P$ es $Sigma$-computable por lo que tenemos su macro.\
   El siguiente programa computa a $h$:
 $
-  L 2: &"IF" P (N overline(n + 1), N 1, ..., N overline(n), P 1, ..., P overline(m)) "GOTO" L 1\
-  &N overline(n) + 1 <- N overline(n + 1) + 1\
-  &"GOTO" L 2\
-  L 1: &N 1 ← N overline(n + 1)\
+  L 2: & "IF" P (N overline(n + 1), N 1, ..., N overline(n), P 1, ..., P overline(m)) "GOTO" L 1 \
+       & N overline(n) + 1 <- N overline(n + 1) + 1                                              \
+       & "GOTO" L 2                                                                              \
+  L 1: & N 1 ← N overline(n + 1)                                                                 \
 $
 
 == Combo 9
-=== Lema: Lema de división por casos para funciones $Sigma$-rs)
-Supongamos $f_i : "Dom"_f_i subset.eq omega^n times Sast^m -> O$ para $i = 1, ..., k$, tales que $"Dom"_f_i arrow.r.double "Dom"_f_j = emptyset$ para $i != j$. Entonces $f_1 tack.r.double ... tack.r.double f_k$ es $Sigma$-r
+=== Lema: Lema de división por casos para funciones $Sigma$-r
+Sean funciones $Sigma$-r $f_i : "Dom"_f_i subset.eq omega^n times Sast^m -> O$ para $i = 1, ..., k$, tq $"Dom"_f_i inter "Dom"_f_j = emptyset$ para $i != j$. Entonces $f_1 union ... union f_k$ es $Sigma$-r
 (Hacer el caso $k = 2$, $n = m = 1$ y $O = omega$)
 
-=== Teorema: Gödel vence a Neumann
+*Prueba:*
+
+Por "Tesis de Church", existen programas $PP_1, PP_2$ que computan $f_1, f_2$.\
+
+Sea $"Halt"_PP_i = lambda t x alpha [ "Halt"^(1,1)(t, x, alpha, PP_i) ]$\
+Notar que, al abstraer $PP$, su dominio esta bajo $Sigma$, por lo que la función es $Sigma$-mixta.\
+Por definición, $"Halt"^(1,1)$ es $(Sigma union Sigma_p)$-pr por lo que $"Halt"_PP_i$ también.\
+Por "Teorema 4.2", $"Halt"_PP_i$ es $Sigma$-pr.
+Por "Tesis de Church" es $Sigma$-computable tq existe su macro.\
+
+El siguiente programa computa a $f_1 union f_2$:
+
+$
+  L 1 : & N 2 <- N 2 + 1                                \
+        & ["IF" "Halt"_PP_1 (N 2, N 1, P 1) "GOTO" L 2]  \
+        & ["IF" "Halt"_PP_2 (N 2, N 1, P 1 ) "GOTO" L 3] \
+        & "GOTO" L 1                                      \
+  L 2 : & [P 1 ← f_1 (N 1, P 1)]                          \
+        & "GOTO" L 4                                      \
+  L 3 : & [P 1 ← f_2 (N 1, P 1)]                          \
+  L 4 : & "SKIP"                                          \
+$
+
+Como es $Sigma$-computable, por "Tesis de Church", $f_1 union f_2$ es $Sigma$-r.
+
+=== Teorema 4.5: Gödel vence a Neumann
 Si $f : "Dom"_f subset.eq omega^n times Sast^m -> omega$ es $Sigma$-computable, entonces $f$ es $Sigma$-r
+
+*Prueba:*
+
+Como $f$ es $Sigma$-computable, existe un programa $PP$ que lo computa.\
+Nótese que $f = Phi^(n,m)_s compose [p^(n,m)_1, ..., p^(n,m)_(n+m), C^(n,m)_PP]$ bajo el alfabeto $Sigma union Sigma_p$.\
+Por lo tanto $f$ es $(Sigma union Sigma_p)$-r.
+Por "Teorema 4.2", $f$ es $Sigma$-r.
 
 = Utilidades
 
